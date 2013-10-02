@@ -2,6 +2,7 @@
 #import <UIKit/UIKit.h>
 
 @class Carro;
+@class OWProgressView;
 
 @interface ViewController : UIViewController {
     
@@ -12,6 +13,9 @@
     IBOutlet UIBarButtonItem *bbttiRecomecar;
     
     IBOutlet UIProgressView *progDeposito;
+    
+    OWProgressView *myProgDeposito;
+    
 }
 
 - (IBAction)tempoPassa:(id)sender;

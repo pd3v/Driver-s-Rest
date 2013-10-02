@@ -3,7 +3,7 @@
 
 @interface Condutor : NSObject
 
-@property (nonatomic, retain) NSNumber *tempoConducao;
+@property (nonatomic, strong) NSNumber *tempoConducao;
 
 
 @end

@@ -1,8 +1,11 @@
 #import <Foundation/Foundation.h>
 
 @class Condutor;
+@class OWProgressView;
 
-@interface Carro : NSObject
+@interface Carro : NSObject {
+    OWProgressView *myProgDeposito;
+}
 
 @property (nonatomic, strong) Condutor *condutor;
 @property (nonatomic, strong) NSNumber *deposito;

@@ -21,6 +21,7 @@
 		3A49223F17CE42DA00B01B2B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A49223E17CE42DA00B01B2B /* UIKit.framework */; };
 		3A49224117CE42DA00B01B2B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A49224017CE42DA00B01B2B /* Foundation.framework */; };
 		3A49224317CE42DA00B01B2B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A49224217CE42DA00B01B2B /* CoreGraphics.framework */; };
+		3AFA39C917FAEE41006A30A5 /* OWProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AFA39C817FAEE41006A30A5 /* OWProgressView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,8 @@
 		3A49223E17CE42DA00B01B2B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		3A49224017CE42DA00B01B2B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		3A49224217CE42DA00B01B2B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		3AFA39C717FAEE41006A30A5 /* OWProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OWProgressView.h; sourceTree = "<group>"; };
+		3AFA39C817FAEE41006A30A5 /* OWProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OWProgressView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +75,8 @@
 				3A0FAD4C17FAE3A7003D0C3E /* MainStoryboard.storyboard */,
 				3A0FAD4F17FAE3A7003D0C3E /* ViewController.h */,
 				3A0FAD5017FAE3A7003D0C3E /* ViewController.m */,
+				3AFA39C717FAEE41006A30A5 /* OWProgressView.h */,
+				3AFA39C817FAEE41006A30A5 /* OWProgressView.m */,
 				3A0FAD5C17FAE3B0003D0C3E /* Supporting Files */,
 			);
 			path = DriverRest;
@@ -190,6 +195,7 @@
 				3A0FAD5317FAE3A7003D0C3E /* Condutor.m in Sources */,
 				3A0FAD5A17FAE3A7003D0C3E /* main.m in Sources */,
 				3A0FAD5B17FAE3A7003D0C3E /* ViewController.m in Sources */,
+				3AFA39C917FAEE41006A30A5 /* OWProgressView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

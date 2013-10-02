@@ -1,6 +1,7 @@
 
 #import "ViewController.h"
 #import "Carro.h"
+#import "OWProgressView.h"
 
 #define CONSUMO_POR_KM 0.06
 #define DEPOSITO_CHEIO_LITROS 60
@@ -24,6 +25,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    myProgDeposito = [[OWProgressView alloc]initWithFrame:CGRectMake(20, 321, 280, 40)];
+    [self.view addSubview:myProgDeposito];
 
     // Definir o botão de Recomeçar da Toolbar com o estilo plano e desativado
     bbttiRecomecar.style = UIBarButtonItemStylePlain;
@@ -85,6 +89,8 @@
         
         dispatch_async(dispatch_get_main_queue(), ^{
             [progDeposito setProgress:[[change objectForKey:NSKeyValueChangeNewKey] floatValue] animated:YES];
+            //[myProgDeposito.progress setProgress:[[change objectForKey:NSKeyValueChangeNewKey] floatValue] animated:YES];
+            myProgDeposito.numProgress=[change objectForKey:NSKeyValueChangeNewKey];
         });
         
         CGFloat nivelDeposito = [[change objectForKey:NSKeyValueChangeNewKey] floatValue];
@@ -123,7 +129,7 @@
     
     operation = [[NSInvocationOperation alloc] initWithTarget:self selector:@selector(atualizarTempoDeposito) object:nil];
     [operation setQueuePriority:NSOperationQueuePriorityVeryHigh];
-    [operation setCompletionBlock:^{ NSLog(@"Terminou InvocationcOperation"); }];
+    // [operation setCompletionBlock:^{ NSLog(@"Terminou InvocationcOperation"); }];
     [queue addOperation:operation];
     
 }
@@ -132,31 +138,6 @@
 {
     NSUInteger tempoViagem = [[carro valueForKeyPath:@"condutor.tempoConducao"] intValue];
     CGFloat nivelDeposito = [[carro valueForKey:@"deposito"] floatValue];
-    
-
-    // KVC - Atribuir o valor à propriedade de um objeto "dentro" de outro objeto através do key path
-    /*[carro setValue:[NSNumber numberWithInt:[tempoViagem intValue] + MINUTOS_A_INCREMENTAR] forKeyPath:@"condutor.tempoConducao"];
-     [carro setValue:[NSNumber numberWithFloat:[deposito floatValue] - COMBUSTIVEL_POR_KM] forKey:@"deposito"];
-     
-     lblTempoDeViagem.text = [self deTempoIntParaTempoHHmmss:[carro valueForKeyPath:@"condutor.tempoConducao"]]; */
-    
-    // NSLog(@"tempo min:%d", [tempoViagem intValue]);
-    // CGFloat comb = [deposito floatValue];
-    
-    /*for (NSUInteger i=[tempoViagem intValue]; i<=6000; i++) {
-        // KVC - Atribuir o valor à propriedade de um objeto "dentro" de outro objeto através do key path
-        [carro setValue:[NSNumber numberWithInt:[tempoViagem intValue] + i/30] forKeyPath:@"condutor.tempoConducao"];
-        comb -= COMBUSTIVEL_POR_KM;
-        // [carro setValue:[NSNumber numberWithFloat:[deposito floatValue] - COMBUSTIVEL_POR_KM] forKey:@"deposito"];
-        //[carro setValue:[NSNumber numberWithFloat:comb] forKey:@"deposito"];
-        
-        if ([[carro valueForKeyPath:@"condutor.tempoConducao"] intValue] % TEMPO_DESCANSO == 0 && [[carro valueForKeyPath:@"condutor.tempoConducao"] intValue] !=0){
-            bttTempoVoa.enabled = YES;
-            break;
-        }
-        
-        [self performSelectorOnMainThread:@selector(relogio) withObject:nil waitUntilDone:YES];
-    }*/
     
     CGFloat consumido = 0;
     NSUInteger distancia = 0;
@@ -190,8 +171,11 @@
 - (IBAction)recomecar:(id)sender
 {
     progDeposito.progress = 1.0;
+    myProgDeposito.progress.progress = 1.0;
     bbttiRecomecar.enabled = NO;
- 
+    
+    
+    [myProgDeposito recomecarViagem];
     [carro recomecarViagem];
     
     progDeposito.progressTintColor = [UIColor colorWithHue:DEPOSITO_CHEIO_HUE saturation:0.88 brightness:0.88 alpha:1];
