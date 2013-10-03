@@ -8,36 +8,91 @@
 #define TEMPO_DESCANCO 120
 #define TIME_HOLDER_SEC 0.005
 
-@implementation OWProgressView
+@implementation OWProgressView {
+    CGFloat depositoCheio;
+}
 
-@synthesize progress, numProgress;
+@synthesize progressValue, progressTintColor;
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
-
+        
         [self setFrame:frame];
         
-        progress = [[UIProgressView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
-        progress.progressTintColor = [UIColor colorWithHue:DEPOSITO_CHEIO_HUE saturation:0.88 brightness:0.88 alpha:1];
-        progress.progress = 1.0;
+        progressView = [[UIProgressView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
+        // progressView.progressTintColor = [UIColor colorWithHue:DEPOSITO_CHEIO_HUE saturation:0.88 brightness:0.88 alpha:1];
+        progressView.progress = 1.0;
         
-        CGFloat depositoCheio = DEPOSITO_CHEIO_LITROS;
-        lblGasLevel = [[UILabel alloc]initWithFrame:CGRectMake(frame.size.width - 26, progress.frame.size.height+2, 30, 15)];
-        UIFont *font = [UIFont fontWithName:@"Helvetica" size:12];
-        lblGasLevel.font = font;
-        lblGasLevel.text = [NSString stringWithFormat:@"%.f l", depositoCheio];
+        depositoCheio = DEPOSITO_CHEIO_LITROS;
         
-        [self addSubview:(UIView *) progress];
-        [self addSubview:(UIView *) lblGasLevel];
+        lblProgressValue = [[UILabel alloc]initWithFrame:
+                            CGRectMake(frame.size.width - 26, progressView.frame.size.height+2, 30, 15)];
+        lblProgressValue.backgroundColor = [UIColor clearColor];
+        UIFont *font = [UIFont fontWithName:@"Helvetica-Bold" size:12];
+        lblProgressValue.font = font;
         
-        // KVO - Definir o viewController como observador para alterações na propriedade tempoConducao
-        [self addObserver:self forKeyPath:@"numProgress" options:NSKeyValueObservingOptionNew context:NULL];
+        lblProgressValue.text = [NSString stringWithFormat:@"%.f l", depositoCheio];
+        
+        [self addSubview:(UIView *) progressView];
+        [self addSubview:(UIView *) lblProgressValue];
         
     }
     return self;
 }
+
+
+- (void)setProgressValue:(NSNumber *)value {
+    
+    
+    /*CGRect lblProgressValueFrame = viewDeposito.progressValue.frame;
+    if (lblProgressValue.frame.origin.x >= [[change objectForKey:NSKeyValueChangeNewKey] floatValue] * progressView.frame.size.width)
+        lblProgressValueFrame = CGRectMake([[change objectForKey:NSKeyValueChangeNewKey] floatValue] * progressView.frame.size.width, lblProgressValue.frame.origin.y, lblProgressValue.frame.size.width, lblProgressValue.frame.size.height);
+    
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [progressView setProgress:[[change objectForKey:NSKeyValueChangeNewKey] floatValue] animated:YES];
+        lblProgressValue.frame = lblProgressValueFrame;
+        lblProgressValue.text = [NSString stringWithFormat:@"%.f l", progressView.progress*DEPOSITO_CHEIO_LITROS];
+        //[myProgDeposito.progress setProgress:[[change objectForKey:NSKeyValueChangeNewKey] floatValue] animated:YES];
+        //myProgDeposito.numProgress=[change objectForKey:NSKeyValueChangeNewKey];
+    });*/
+    
+    CGRect lblProgressValueFrame = lblProgressValue.frame;
+    // NSLog(@"self.frame:%@", NSStringFromCGRect(lblProgressValueFrame));
+    if (lblProgressValue.frame.origin.x >= [value floatValue] * self.frame.size.width)
+        lblProgressValueFrame = CGRectMake([value floatValue] * progressView.frame.size.width, lblProgressValue.frame.origin.y, lblProgressValue.frame.size.width, lblProgressValue.frame.size.height);
+    
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        //[progressView setProgress:[[change objectForKey:NSKeyValueChangeNewKey] floatValue] animated:YES];
+        lblProgressValue.frame = lblProgressValueFrame;
+        //NSLog(@"lblProgressValue.frame:%.2f value:%.2f", lblProgressValue.frame.origin.x, [value floatValue] * progressView.frame.size.width);
+        lblProgressValue.text = [NSString stringWithFormat:@"%.f l", progressView.progress * depositoCheio];
+        progressView.progress = [value floatValue];
+        //[myProgDeposito.progress setProgress:[[change objectForKey:NSKeyValueChangeNewKey] floatValue] animated:YES];
+        //myProgDeposito.numProgress=[change objectForKey:NSKeyValueChangeNewKey];
+    });
+
+
+    
+    /*dispatch_async(dispatch_get_main_queue(), ^{
+        progressView.progress = [value floatValue];
+    });*/
+}
+
+- (UIColor *)progressTintColor {
+    return progressView.progressTintColor;
+}
+
+- (void)setProgressTintColor:(UIColor *)hue {
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        progressView.progressTintColor = hue;
+    });
+}
+
 
 /*
 // Only override drawRect: if you perform custom drawing.
@@ -48,51 +103,15 @@
 }
 */
 
-// Quando as propriedades observadas têm valores novos, programar as ações recorrentes disso. A classe NSObject adota o protocolo NSValueKeyCoding que permite ter este método disponível num UIViewController
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+
+
+
+-(void)resetToProgress:(NSNumber *)progress andHue:(NSNumber *)hue
 {
-    // A propriedade deposito do objeto carro mudou
-    if ([keyPath isEqualToString:@"numProgress"])
-    {
-        // Obter a tonalidade da cor atual da ProgressBar Deposito
-        CGFloat hue;
-        UIColor *cor = progress.progressTintColor;
-        [cor getHue:&hue saturation:nil brightness:nil alpha:nil];
-        
-        hue -= DEPOSITO_CHEIO_HUE/((DEPOSITO_CHEIO_LITROS*60)/(VELOCIDADE_KM_H*CONSUMO_POR_KM)); // À medida que o depósito fica mais vazio a cor vai-se aproximando do vermelho*/
-        
-        progress.progressTintColor = [UIColor colorWithHue:hue saturation:0.88 brightness:0.88 alpha:1];
-        NSLog(@"progress:%.2f", [[change objectForKey:NSKeyValueChangeNewKey] floatValue] * progress.frame.size.width);
-        //CGRect lblGasLevelFrame = CGRectMake(lblGasLevel.frame.origin.x * ([[change objectForKey:NSKeyValueChangeNewKey] floatValue]/50), lblGasLevel.frame.origin.y, lblGasLevel.frame.size.width, lblGasLevel.frame.size.height);
-
-        CGRect lblGasLevelFrame = lblGasLevel.frame;
-        if (lblGasLevel.frame.origin.x >= [[change objectForKey:NSKeyValueChangeNewKey] floatValue] * progress.frame.size.width)
-            lblGasLevelFrame = CGRectMake([[change objectForKey:NSKeyValueChangeNewKey] floatValue] * progress.frame.size.width, lblGasLevel.frame.origin.y, lblGasLevel.frame.size.width, lblGasLevel.frame.size.height);
-
-
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [progress setProgress:[[change objectForKey:NSKeyValueChangeNewKey] floatValue] animated:YES];
-            lblGasLevel.frame = lblGasLevelFrame;
-            lblGasLevel.text = [NSString stringWithFormat:@"%.f l", progress.progress*DEPOSITO_CHEIO_LITROS];
-            //[myProgDeposito.progress setProgress:[[change objectForKey:NSKeyValueChangeNewKey] floatValue] animated:YES];
-            //myProgDeposito.numProgress=[change objectForKey:NSKeyValueChangeNewKey];
-        });
-        
-        /*CGFloat nivelDeposito = [[change objectForKey:NSKeyValueChangeNewKey] floatValue];
-        if (nivelDeposito == 0.0)
-        {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                bbttiRecomecar.enabled = YES;
-            });
-        }*/
-    }
-}
-
--(void)recomecarViagem
-{
-    lblGasLevel.frame = CGRectMake(self.frame.size.width - 26, progress.frame.size.height + 2, 30, 15);
-    
-    progress.progressTintColor = [UIColor colorWithHue:DEPOSITO_CHEIO_HUE saturation:0.88 brightness:0.88 alpha:1.0];
+    lblProgressValue.frame = CGRectMake(self.frame.size.width - 26, progressView.frame.size.height + 2, 30, 15);
+    lblProgressValue.text = [NSString stringWithFormat:@"%.f", depositoCheio];
+    self.progressValue = progress;
+    progressView.progressTintColor = [UIColor colorWithHue:[hue floatValue] saturation:0.88 brightness:0.88 alpha:1.0];
 }
 
 

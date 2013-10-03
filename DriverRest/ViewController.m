@@ -1,14 +1,14 @@
 
 #import "ViewController.h"
 #import "Carro.h"
-#import "OWProgressView.h"
+//#import "OWProgressView.h"
 
 #define CONSUMO_POR_KM 0.06
 #define DEPOSITO_CHEIO_LITROS 60
 #define VELOCIDADE_KM_H 100
 #define DEPOSITO_CHEIO_HUE 0.36
 #define TEMPO_DESCANCO 120
-#define TIME_HOLDER_SEC 0.005
+#define TIME_HOLDER_SEC 0.003
 
 
 @interface ViewController (){
@@ -26,9 +26,6 @@
 {
     [super viewDidLoad];
     
-    myProgDeposito = [[OWProgressView alloc]initWithFrame:CGRectMake(20, 321, 280, 40)];
-    [self.view addSubview:myProgDeposito];
-
     // Definir o botão de Recomeçar da Toolbar com o estilo plano e desativado
     bbttiRecomecar.style = UIBarButtonItemStylePlain;
     bbttiRecomecar.enabled = NO;
@@ -36,7 +33,10 @@
     // Colocar a barra de combustível a verde -> depósito cheio
     progDeposito.progressTintColor = [UIColor colorWithHue:DEPOSITO_CHEIO_HUE saturation:0.88 brightness:0.88 alpha:1];
     
-    carro = [[Carro alloc] init];
+    carro = [[Carro alloc] initWithFrame:self.view.bounds];
+    carro.userInteractionEnabled = NO;
+    [self.view insertSubview:carro atIndex:0];
+    // carro.progViewDeposito.progressView.progress = 1.0;
     
     // KVO - Definir o viewController como observador para alterações na propriedade tempoConducao
     [carro addObserver:self forKeyPath:@"condutor.tempoConducao" options:NSKeyValueObservingOptionNew context:NULL];
@@ -89,8 +89,8 @@
         
         dispatch_async(dispatch_get_main_queue(), ^{
             [progDeposito setProgress:[[change objectForKey:NSKeyValueChangeNewKey] floatValue] animated:YES];
-            //[myProgDeposito.progress setProgress:[[change objectForKey:NSKeyValueChangeNewKey] floatValue] animated:YES];
-            myProgDeposito.numProgress=[change objectForKey:NSKeyValueChangeNewKey];
+            //[myProgDeposito.progressView setProgress:[[change objectForKey:NSKeyValueChangeNewKey] floatValue] animated:YES];
+            //myProgDeposito.numProgress=[change objectForKey:NSKeyValueChangeNewKey];
         });
         
         CGFloat nivelDeposito = [[change objectForKey:NSKeyValueChangeNewKey] floatValue];
@@ -171,11 +171,11 @@
 - (IBAction)recomecar:(id)sender
 {
     progDeposito.progress = 1.0;
-    myProgDeposito.progress.progress = 1.0;
+    // myProgDeposito.progressView.progress = 1.0;
     bbttiRecomecar.enabled = NO;
     
     
-    [myProgDeposito recomecarViagem];
+    // [myProgDeposito recomecarViagem];
     [carro recomecarViagem];
     
     progDeposito.progressTintColor = [UIColor colorWithHue:DEPOSITO_CHEIO_HUE saturation:0.88 brightness:0.88 alpha:1];

@@ -2,7 +2,7 @@
 #import <UIKit/UIKit.h>
 
 @class Carro;
-@class OWProgressView;
+// @class OWProgressView;
 
 @interface ViewController : UIViewController {
     
@@ -14,7 +14,7 @@
     
     IBOutlet UIProgressView *progDeposito;
     
-    OWProgressView *myProgDeposito;
+    // OWProgressView *myProgDeposito;
     
 }
 

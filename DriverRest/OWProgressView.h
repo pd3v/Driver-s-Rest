@@ -2,13 +2,15 @@
 #import <UIKit/UIKit.h>
 
 @interface OWProgressView : UIView {
-    UIProgressView *progress;
-    UILabel *lblGasLevel;
+    UIProgressView *progressView;
+    UILabel *lblProgressValue;
+    NSString *label;
 }
 
-@property (nonatomic) NSNumber *numProgress;
-@property (nonatomic) UIProgressView *progress;
+@property (nonatomic) NSNumber *progressValue;
+@property (nonatomic) UIColor  *progressTintColor;
+@property (nonatomic, copy) NSString *label;
 
--(void)recomecarViagem;
+-(void)resetToProgress:(NSNumber *)progress andHue:(NSNumber *)hue;
 
 @end
