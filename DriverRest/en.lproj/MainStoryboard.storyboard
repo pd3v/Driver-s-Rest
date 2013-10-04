@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12F37" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="2">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
@@ -26,13 +26,6 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="combústivel" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="xgD-FU-UQb">
-                                <rect key="frame" x="20" y="242" width="280" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="d6l-N5-wGR">
                                 <rect key="frame" x="95" y="129" width="132" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -48,12 +41,6 @@
                                     <action selector="tempoPassa:" destination="2" eventType="touchUpInside" id="70h-eC-1aW"/>
                                 </connections>
                             </button>
-                            <progressView opaque="NO" contentMode="scaleToFill" progress="1" id="GiV-cX-q5o">
-                                <rect key="frame" x="20" y="261" width="280" height="9"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.14519250392913818" green="0.87581324577331543" blue="0.1501358300447464" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="progressTintColor" red="0.14519250392913818" green="0.87581324577331543" blue="0.1501358300447464" alpha="1" colorSpace="calibratedRGB"/>
-                            </progressView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="blackTranslucent" id="qwt-la-0bx">
                                 <rect key="frame" x="0.0" y="416" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
@@ -74,26 +61,12 @@
                         <outlet property="bbttiRecomecar" destination="hyj-ZY-IxK" id="IPh-vy-kql"/>
                         <outlet property="bttTempoVoa" destination="d6l-N5-wGR" id="jPv-KR-fub"/>
                         <outlet property="lblTempoDeViagem" destination="2c5-2J-FpV" id="jBM-2l-T1U"/>
-                        <outlet property="progDeposito" destination="GiV-cX-q5o" id="8RR-i7-7WX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4" sceneMemberID="firstResponder"/>
             </objects>
         </scene>
     </scenes>
-    <classes>
-        <class className="ViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="recomecar:"/>
-                <relationship kind="action" name="tempoPassa:"/>
-                <relationship kind="outlet" name="bbttiRecomecar" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="bttTempoVoa" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="lblTempoDeViagem" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="progDeposito" candidateClass="UIProgressView"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

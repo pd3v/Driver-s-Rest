@@ -4,13 +4,18 @@
 @interface OWProgressView : UIView {
     UIProgressView *progressView;
     UILabel *lblProgressValue;
-    NSString *label;
+    UILabel *lblDescription;
+    //CGFloat maxValue;
 }
 
 @property (nonatomic) NSNumber *progressValue;
-@property (nonatomic) UIColor  *progressTintColor;
-@property (nonatomic, copy) NSString *label;
+@property (nonatomic) NSNumber *maxValue;
+//@property (nonatomic) UILabel *maxValue;
+//@property (nonatomic) UIColor  *progressTintColor;
+@property (nonatomic) NSNumber *progressTintColor;
+//@property (nonatomic) UILabel *lblDescription;
+@property (nonatomic, copy) NSString *description;
 
--(void)resetToProgress:(NSNumber *)progress andHue:(NSNumber *)hue;
+-(void)reset:(NSNumber *)progress max:(NSNumber *)max hue:(NSNumber *)hue;
 
 @end

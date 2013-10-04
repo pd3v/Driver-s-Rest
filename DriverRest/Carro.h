@@ -16,7 +16,7 @@
 @property (nonatomic, readonly) NSUInteger capacidadeDepositoLitros;
 @property (nonatomic, readonly) NSUInteger velocidadeKmH;
 @property (nonatomic, readonly) CGFloat depositoCheioHue;
-@property (nonatomic, readonly) NSUInteger tempoDescancoMin;
+// @property (nonatomic, readonly) NSUInteger tempoDescancoMin;
 
 @property (nonatomic, strong) OWProgressView *viewDeposito;
 
