@@ -1,4 +1,5 @@
-// #import <Foundation/Foundation.h>
+
+#import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
 @class Condutor;
@@ -8,9 +9,9 @@
     OWProgressView *viewDeposito;
 }
 
-@property (nonatomic, strong) Condutor *condutor;
-@property (nonatomic, strong) NSNumber *deposito;
-@property (nonatomic, strong) NSNumber *velocidade;
+@property (nonatomic) Condutor *condutor;
+@property (nonatomic) NSNumber *deposito;
+@property (nonatomic) NSNumber *velocidade;
 
 @property (nonatomic, readonly) CGFloat consumoPorKm;
 @property (nonatomic, readonly) NSUInteger capacidadeDepositoLitros;
@@ -20,6 +21,7 @@
 
 @property (nonatomic, strong) OWProgressView *viewDeposito;
 
+- (void)atualizarTempoDeposito;
 - (void)recomecarViagem;
 
 @end

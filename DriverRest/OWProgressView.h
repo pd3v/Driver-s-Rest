@@ -5,7 +5,7 @@
     UIProgressView *progressView;
     UILabel *lblProgressValue;
     UILabel *lblDescription;
-    //CGFloat maxValue;
+    // NSMutableArray *max;
 }
 
 @property (nonatomic) NSNumber *progressValue;
@@ -16,6 +16,6 @@
 //@property (nonatomic) UILabel *lblDescription;
 @property (nonatomic, copy) NSString *description;
 
--(void)reset:(NSNumber *)progress max:(NSNumber *)max hue:(NSNumber *)hue;
+-(void)reset;
 
 @end
