@@ -1,9 +1,9 @@
 
 #import <UIKit/UIKit.h>
+#import "Carro.h"
+//@class Carro;
 
-@class Carro;
-
-@interface ViewController : UIViewController {
+@interface ViewController : UIViewController <CarroDelegate> {
     
     Carro *carro;
     

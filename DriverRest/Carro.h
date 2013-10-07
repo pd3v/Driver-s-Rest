@@ -5,6 +5,10 @@
 @class Condutor;
 @class OWProgressView;
 
+@protocol CarroDelegate
+- (void)carroSemCombustivel;
+@end
+
 @interface Carro : UIView {
     OWProgressView *viewDeposito;
 }
@@ -17,9 +21,10 @@
 @property (nonatomic, readonly) NSUInteger capacidadeDepositoLitros;
 @property (nonatomic, readonly) NSUInteger velocidadeKmH;
 @property (nonatomic, readonly) CGFloat depositoCheioHue;
-// @property (nonatomic, readonly) NSUInteger tempoDescancoMin;
 
 @property (nonatomic, strong) OWProgressView *viewDeposito;
+
+@property (nonatomic, weak) id <CarroDelegate> delegate;
 
 - (void)atualizarTempoDeposito;
 - (void)recomecarViagem;

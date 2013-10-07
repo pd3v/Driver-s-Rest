@@ -69,13 +69,13 @@
 				3A0FAD4417FAE3A7003D0C3E /* Condutor.m */,
 				3A0FAD4117FAE3A7003D0C3E /* Carro.h */,
 				3A0FAD4217FAE3A7003D0C3E /* Carro.m */,
+				3AFA39C717FAEE41006A30A5 /* OWProgressView.h */,
+				3AFA39C817FAEE41006A30A5 /* OWProgressView.m */,
 				3A0FAD3F17FAE3A7003D0C3E /* AppDelegate.h */,
 				3A0FAD4017FAE3A7003D0C3E /* AppDelegate.m */,
 				3A0FAD4C17FAE3A7003D0C3E /* MainStoryboard.storyboard */,
 				3A0FAD4F17FAE3A7003D0C3E /* ViewController.h */,
 				3A0FAD5017FAE3A7003D0C3E /* ViewController.m */,
-				3AFA39C717FAEE41006A30A5 /* OWProgressView.h */,
-				3AFA39C817FAEE41006A30A5 /* OWProgressView.m */,
 				3A0FAD5C17FAE3B0003D0C3E /* Supporting Files */,
 			);
 			path = DriverRest;
