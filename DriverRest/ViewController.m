@@ -1,6 +1,6 @@
 
 #import "ViewController.h"
-#import "Carro.h"
+//#import "Carro.h"
 
 @implementation ViewController
 
@@ -12,13 +12,10 @@
     bbttiRecomecar.enabled = NO;
     
     carro = [[Carro alloc] initWithFrame:self.view.bounds];
-    carro.userInteractionEnabled = NO;
-    [self.view insertSubview:carro atIndex:0];
-    
     carro.delegate = self;
-    
     [carro addObserver:self forKeyPath:@"condutor.tempoConducao" options:NSKeyValueObservingOptionNew context:NULL];
     //[carro addObserver:self forKeyPath:@"deposito" options:(NSKeyValueObservingOptionNew) context:NULL];
+    [self.view insertSubview:carro atIndex:0];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
@@ -26,37 +23,34 @@
     if ([keyPath isEqualToString:@"condutor.tempoConducao"])
     {
         
-        // dispatch_async(dispatch_get_main_queue(), ^{
-            lblTempoDeViagem.text = [self deTempoIntParaTempoHHmmss:[change objectForKey:NSKeyValueChangeNewKey]];
-        // });
-
+        lblTempoDeViagem.text = [self deTempoIntParaTempoHHmmss:[change objectForKey:NSKeyValueChangeNewKey]];
+     
         NSUInteger novoTempo = [[change objectForKey:NSKeyValueChangeNewKey] intValue];
         
-        if (novoTempo != 0 && novoTempo % [[carro valueForKeyPath:@"condutor.tempoDescanco"] intValue] == 0){
+        if (novoTempo != 0 && novoTempo % [[carro valueForKeyPath:@"condutor.tempoDescanco"] intValue] == 0)
+        {
             UIColor *red = [UIColor redColor];
            
-            //dispatch_async(dispatch_get_main_queue(), ^{
-                
-                bttTempoVoa.enabled = YES;
-                
-                for (id eachView in [self.view subviews])
-                    if (![eachView isKindOfClass:[UIButton class]])
-                        [eachView setBackgroundColor:red];
-             //});
+            bttTempoVoa.enabled = YES;
+            
+            for (id eachView in [self.view subviews])
+                if (![eachView isKindOfClass:[UIButton class]])
+                    [eachView setBackgroundColor:red];
         }
-        else {
+        else
+        {
+            
             UIColor *white = [UIColor whiteColor];
             
-            // dispatch_async(dispatch_get_main_queue(), ^{
-                for (id eachView in [self.view subviews])
+            for (id eachView in [self.view subviews])
                     [eachView setBackgroundColor:white];
-            // });
         }
     }
 
+    // CarroDelegate Protocol substitutes the following code avoiding the use of GCD.
+    // ViewController does not have to "know" that for enabling a button onto itself it has to dispatch to main queue.
     /*if ([keyPath isEqualToString:@"deposito"])
     {
-        // NSLog(@"deposito:%f", [[change objectForKey:NSKeyValueChangeNewKey] floatValue]);
         if ([[change objectForKey:NSKeyValueChangeNewKey] floatValue] == 0.0)
         {
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -90,7 +84,7 @@
     [carro atualizarTempoDeposito];
 }
 
-- (IBAction)recomecar:(id)sender
+- (IBAction)recomecarViagem:(id)sender
 {
     bbttiRecomecar.enabled = NO;
     bttTempoVoa.enabled = YES;
@@ -103,6 +97,7 @@
 - (void)carroSemCombustivel
 {
     bbttiRecomecar.enabled = YES;
+    
 }
 
 - (void)dealloc

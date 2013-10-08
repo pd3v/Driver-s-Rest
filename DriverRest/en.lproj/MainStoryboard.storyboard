@@ -45,7 +45,7 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="sfk-md-w51"/>
                                     <barButtonItem systemItem="refresh" id="hyj-ZY-IxK">
                                         <connections>
-                                            <action selector="recomecar:" destination="2" id="KcJ-9x-XMi"/>
+                                            <action selector="recomecarViagem:" destination="2" id="vdS-xZ-sB4"/>
                                         </connections>
                                     </barButtonItem>
                                 </items>

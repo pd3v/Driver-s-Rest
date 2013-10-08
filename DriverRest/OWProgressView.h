@@ -5,15 +5,12 @@
     UIProgressView *progressView;
     UILabel *lblProgressValue;
     UILabel *lblDescription;
-    // NSMutableArray *max;
+    CGRect lblProgressValueInitFrame;
 }
 
 @property (nonatomic) NSNumber *progressValue;
-@property (nonatomic) NSNumber *maxValue;
-//@property (nonatomic) UILabel *maxValue;
-//@property (nonatomic) UIColor  *progressTintColor;
+@property (nonatomic) NSNumber *maxLabelValue;
 @property (nonatomic) NSNumber *progressTintColor;
-//@property (nonatomic) UILabel *lblDescription;
 @property (nonatomic, copy) NSString *description;
 
 -(void)reset;

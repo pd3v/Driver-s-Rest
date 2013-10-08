@@ -1,7 +1,6 @@
 
 #import <UIKit/UIKit.h>
 #import "Carro.h"
-//@class Carro;
 
 @interface ViewController : UIViewController <CarroDelegate> {
     
@@ -13,7 +12,7 @@
 }
 
 - (IBAction)tempoPassa:(id)sender;
-- (IBAction)recomecar:(id)sender;
+- (IBAction)recomecarViagem:(id)sender;
 
 @end
 

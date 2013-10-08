@@ -3,7 +3,7 @@
 
 @implementation OWProgressView
 
-@synthesize progressValue, progressTintColor, description, maxValue;
+@synthesize progressValue, progressTintColor, description, maxLabelValue;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -19,16 +19,12 @@
         progressView = [[UIProgressView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
         progressView.progress = 1.0;
         
-        lblProgressValue = [[UILabel alloc]initWithFrame:
-                            CGRectMake(frame.size.width - 35, progressView.frame.size.height+2, 35, 15)];
+        lblProgressValueInitFrame = CGRectMake(frame.size.width - 35, progressView.frame.size.height+2, 35, 15);
+        lblProgressValue = [[UILabel alloc]initWithFrame:lblProgressValueInitFrame];
         lblProgressValue.textAlignment = NSTextAlignmentLeft;
         [lblProgressValue sizeToFit];
         lblProgressValue.backgroundColor = [UIColor clearColor];
-
-        UIFont *font = [UIFont fontWithName:@"Helvetica-Bold" size:12];
-        lblProgressValue.font = font;
-        
-        // max = [[NSMutableArray alloc]init];
+        lblProgressValue.font = [UIFont fontWithName:@"Helvetica-Bold" size:12];
   
         [self addSubview:(UIView *) lblDescription];
         [self addSubview:(UIView *) progressView];
@@ -46,23 +42,17 @@
     if (lblProgressValue.frame.origin.x >= [value floatValue] * self.frame.size.width)
         lblProgressValueFrame = CGRectMake([value floatValue] * progressView.frame.size.width, lblProgressValue.frame.origin.y, lblProgressValue.frame.size.width , lblProgressValue.frame.size.height);
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        //[progressView setProgress:[[change objectForKey:NSKeyValueChangeNewKey] floatValue] animated:YES];
+    //dispatch_async(dispatch_get_main_queue(), ^{
         lblProgressValue.frame = lblProgressValueFrame;
+        lblProgressValue.text = [NSString stringWithFormat:@"%.1f l", progressView.progress  * [maxLabelValue floatValue]];
         [lblProgressValue sizeToFit];
-        //NSLog(@"lblProgressValue.frame:%.2f value:%.2f", lblProgressValue.frame.origin.x, [value floatValue] * progressView.frame.size.width);
-        // NSLog(@"lblProgressValue.text = %@", /*[NSString stringWithFormat:@"%.2f l", progressView.progress]*/ [NSString stringWithFormat:@"%d", [maxValue intValue]]);
-        // lblProgressValue.text = [NSString stringWithFormat:@"%.f l", progressView.progress  * [[max objectAtIndex:0] intValue]];
-        lblProgressValue.text = [NSString stringWithFormat:@"%.1f l", progressView.progress  * [maxValue intValue]];
 
-        progressView.progress = [value floatValue];
-        //[myProgDeposito.progress setProgress:[[change objectForKey:NSKeyValueChangeNewKey] floatValue] animated:YES];
-        //myProgDeposito.numProgress=[change objectForKey:NSKeyValueChangeNewKey];
-    });
+        [progressView setProgress:[value floatValue] animated:TRUE];
+    //});
 }
 
 - (NSNumber *)progressTintColor {
-    
+   
     CGFloat hue;
     UIColor *cor = progressView.progressTintColor;
     [cor getHue:&hue saturation:nil brightness:nil alpha:nil];
@@ -72,10 +62,11 @@
 
 - (void)setProgressTintColor:(NSNumber *)hue {
     
-    // NSLog(@"hue = %.2f", [hue floatValue]);
-    dispatch_async(dispatch_get_main_queue(), ^{
+
+    //dispatch_async(dispatch_get_main_queue(), ^{
+        //NSLog(@"hue:%f", [hue floatValue]);
         progressView.progressTintColor = [UIColor colorWithHue:[hue floatValue] saturation:0.88 brightness:0.88 alpha:1.0];
-    });
+    //});
 }
 
 - (void)setDescription:(NSString *)aDescription {
@@ -84,32 +75,27 @@
 }
 
 
-- (void)setMaxValue:(NSNumber *)amaxValue {
+- (void)setMaxLabelValue:(NSNumber *)amaxLabelValue {
     
-    // [max addObject:amaxValue];
-    maxValue = amaxValue;
-    // NSLog(@"max array:%@", [max objectAtIndex:0]);
-    // lblProgressValue.text = [NSString stringWithFormat:@"%d l", [[max objectAtIndex:0] intValue]];
-    lblProgressValue.text = [NSString stringWithFormat:@"%.1f l", [amaxValue floatValue]];
-    //lblProgressValue.frame = CGRectMake(self.frame.size.width - 26, progressView.frame.size.height+2, 50, 15);
+    maxLabelValue = amaxLabelValue;
+    
+    lblProgressValue.text = [NSString stringWithFormat:@"%.1f l", [amaxLabelValue floatValue]];
+    [lblProgressValue sizeToFit];
 }
 
-- (NSNumber *)maxValue {
+- (NSNumber *)maxLabelValue {
     
-    return maxValue;
+    return maxLabelValue;
 }
 
 
 -(void)reset
 {
-    // maxValue = [NSNumber numberWithInt:[[max objectAtIndex:0] intValue]];
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        // lblProgressValue.text = [NSString stringWithFormat:@"%d l", [[max objectAtIndex:0] intValue]];
-        lblProgressValue.text = [NSString stringWithFormat:@"%.1f l", [maxValue floatValue]];
-        lblProgressValue.frame = CGRectMake(self.frame.size.width - 35, progressView.frame.size.height+2, 35, 15);
+    //dispatch_async(dispatch_get_main_queue(), ^{
+        lblProgressValue.text = [NSString stringWithFormat:@"%.1f l", [maxLabelValue floatValue]];
+        lblProgressValue.frame = lblProgressValueInitFrame;
         [lblProgressValue sizeToFit];
-    });
+    //});
 }
 
 /*

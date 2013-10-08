@@ -1,5 +1,4 @@
 
-#import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
 @class Condutor;
@@ -21,8 +20,9 @@
 @property (nonatomic, readonly) NSUInteger capacidadeDepositoLitros;
 @property (nonatomic, readonly) NSUInteger velocidadeKmH;
 @property (nonatomic, readonly) CGFloat depositoCheioHue;
+@property (nonatomic, readonly) CGFloat tempoDescancoMin;
 
-@property (nonatomic, strong) OWProgressView *viewDeposito;
+@property (nonatomic) OWProgressView *viewDeposito;
 
 @property (nonatomic, weak) id <CarroDelegate> delegate;
 
