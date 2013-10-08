@@ -42,13 +42,11 @@
     if (lblProgressValue.frame.origin.x >= [value floatValue] * self.frame.size.width)
         lblProgressValueFrame = CGRectMake([value floatValue] * progressView.frame.size.width, lblProgressValue.frame.origin.y, lblProgressValue.frame.size.width , lblProgressValue.frame.size.height);
     
-    //dispatch_async(dispatch_get_main_queue(), ^{
-        lblProgressValue.frame = lblProgressValueFrame;
-        lblProgressValue.text = [NSString stringWithFormat:@"%.1f l", progressView.progress  * [maxLabelValue floatValue]];
-        [lblProgressValue sizeToFit];
+    lblProgressValue.frame = lblProgressValueFrame;
+    lblProgressValue.text = [NSString stringWithFormat:@"%.1f l", progressView.progress  * [maxLabelValue floatValue]];
+    [lblProgressValue sizeToFit];
 
-        [progressView setProgress:[value floatValue] animated:TRUE];
-    //});
+    [progressView setProgress:[value floatValue] animated:TRUE];
 }
 
 - (NSNumber *)progressTintColor {
@@ -62,11 +60,7 @@
 
 - (void)setProgressTintColor:(NSNumber *)hue {
     
-
-    //dispatch_async(dispatch_get_main_queue(), ^{
-        //NSLog(@"hue:%f", [hue floatValue]);
-        progressView.progressTintColor = [UIColor colorWithHue:[hue floatValue] saturation:0.88 brightness:0.88 alpha:1.0];
-    //});
+    progressView.progressTintColor = [UIColor colorWithHue:[hue floatValue] saturation:0.88 brightness:0.88 alpha:1.0];
 }
 
 - (void)setDescription:(NSString *)aDescription {
@@ -91,11 +85,9 @@
 
 -(void)reset
 {
-    //dispatch_async(dispatch_get_main_queue(), ^{
-        lblProgressValue.text = [NSString stringWithFormat:@"%.1f l", [maxLabelValue floatValue]];
-        lblProgressValue.frame = lblProgressValueInitFrame;
-        [lblProgressValue sizeToFit];
-    //});
+    lblProgressValue.text = [NSString stringWithFormat:@"%.1f l", [maxLabelValue floatValue]];
+    lblProgressValue.frame = lblProgressValueInitFrame;
+    [lblProgressValue sizeToFit];
 }
 
 /*
