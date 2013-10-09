@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		3A0FAD5117FAE3A7003D0C3E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A0FAD4017FAE3A7003D0C3E /* AppDelegate.m */; };
-		3A0FAD5217FAE3A7003D0C3E /* Carro.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A0FAD4217FAE3A7003D0C3E /* Carro.m */; };
-		3A0FAD5317FAE3A7003D0C3E /* Condutor.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A0FAD4417FAE3A7003D0C3E /* Condutor.m */; };
+		3A0FAD5217FAE3A7003D0C3E /* Car.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A0FAD4217FAE3A7003D0C3E /* Car.m */; };
+		3A0FAD5317FAE3A7003D0C3E /* Driver.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A0FAD4417FAE3A7003D0C3E /* Driver.m */; };
 		3A0FAD5417FAE3A7003D0C3E /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A0FAD4517FAE3A7003D0C3E /* Default-568h@2x.png */; };
 		3A0FAD5517FAE3A7003D0C3E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A0FAD4617FAE3A7003D0C3E /* Default.png */; };
 		3A0FAD5617FAE3A7003D0C3E /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A0FAD4717FAE3A7003D0C3E /* Default@2x.png */; };
@@ -26,10 +26,10 @@
 /* Begin PBXFileReference section */
 		3A0FAD3F17FAE3A7003D0C3E /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		3A0FAD4017FAE3A7003D0C3E /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		3A0FAD4117FAE3A7003D0C3E /* Carro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Carro.h; sourceTree = "<group>"; };
-		3A0FAD4217FAE3A7003D0C3E /* Carro.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Carro.m; sourceTree = "<group>"; };
-		3A0FAD4317FAE3A7003D0C3E /* Condutor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Condutor.h; sourceTree = "<group>"; };
-		3A0FAD4417FAE3A7003D0C3E /* Condutor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Condutor.m; sourceTree = "<group>"; };
+		3A0FAD4117FAE3A7003D0C3E /* Car.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Car.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		3A0FAD4217FAE3A7003D0C3E /* Car.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = Car.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		3A0FAD4317FAE3A7003D0C3E /* Driver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Driver.h; sourceTree = "<group>"; };
+		3A0FAD4417FAE3A7003D0C3E /* Driver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Driver.m; sourceTree = "<group>"; };
 		3A0FAD4517FAE3A7003D0C3E /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		3A0FAD4617FAE3A7003D0C3E /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		3A0FAD4717FAE3A7003D0C3E /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
@@ -39,7 +39,7 @@
 		3A0FAD4D17FAE3A7003D0C3E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		3A0FAD4E17FAE3A7003D0C3E /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		3A0FAD4F17FAE3A7003D0C3E /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		3A0FAD5017FAE3A7003D0C3E /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		3A0FAD5017FAE3A7003D0C3E /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A49223B17CE42DA00B01B2B /* DriverRest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DriverRest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A49223E17CE42DA00B01B2B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		3A49224017CE42DA00B01B2B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -65,10 +65,10 @@
 		3A0FAD3E17FAE3A7003D0C3E /* DriverRest */ = {
 			isa = PBXGroup;
 			children = (
-				3A0FAD4317FAE3A7003D0C3E /* Condutor.h */,
-				3A0FAD4417FAE3A7003D0C3E /* Condutor.m */,
-				3A0FAD4117FAE3A7003D0C3E /* Carro.h */,
-				3A0FAD4217FAE3A7003D0C3E /* Carro.m */,
+				3A0FAD4317FAE3A7003D0C3E /* Driver.h */,
+				3A0FAD4417FAE3A7003D0C3E /* Driver.m */,
+				3A0FAD4117FAE3A7003D0C3E /* Car.h */,
+				3A0FAD4217FAE3A7003D0C3E /* Car.m */,
 				3AFA39C717FAEE41006A30A5 /* OWProgressView.h */,
 				3AFA39C817FAEE41006A30A5 /* OWProgressView.m */,
 				3A0FAD3F17FAE3A7003D0C3E /* AppDelegate.h */,
@@ -189,8 +189,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A0FAD5117FAE3A7003D0C3E /* AppDelegate.m in Sources */,
-				3A0FAD5217FAE3A7003D0C3E /* Carro.m in Sources */,
-				3A0FAD5317FAE3A7003D0C3E /* Condutor.m in Sources */,
+				3A0FAD5217FAE3A7003D0C3E /* Car.m in Sources */,
+				3A0FAD5317FAE3A7003D0C3E /* Driver.m in Sources */,
 				3A0FAD5A17FAE3A7003D0C3E /* main.m in Sources */,
 				3A0FAD5B17FAE3A7003D0C3E /* ViewController.m in Sources */,
 				3AFA39C917FAEE41006A30A5 /* OWProgressView.m in Sources */,

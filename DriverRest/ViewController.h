@@ -1,18 +1,20 @@
 
 #import <UIKit/UIKit.h>
-#import "Carro.h"
+#import "Car.h"
 
-@interface ViewController : UIViewController <CarroDelegate> {
+@interface ViewController : UIViewController <CarDelegate> {
     
-    Carro *carro;
+    Car *car;
     
-    IBOutlet UILabel *lblTempoDeViagem;
-    IBOutlet UIButton *bttTempoVoa;
-    IBOutlet UIBarButtonItem *bbttiRecomecar;
+    IBOutlet UILabel *lblTripTime;
+    IBOutlet UIButton *bttGo;
+    IBOutlet UIButton *bttStop;
+    IBOutlet UIBarButtonItem *bbttiRestartTrip;
 }
 
-- (IBAction)tempoPassa:(id)sender;
-- (IBAction)recomecarViagem:(id)sender;
+- (IBAction)goingOnATrip:(id)sender;
+- (IBAction)stopTrip:(id)sender;
+- (IBAction)restartTrip:(id)sender;
 
 @end
 

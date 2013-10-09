@@ -7,33 +7,36 @@
 {
     [super viewDidLoad];
     
-    bbttiRecomecar.style = UIBarButtonItemStylePlain;
-    bbttiRecomecar.enabled = NO;
+    bttGo.hidden = NO;
+    bttStop.hidden = YES;
+    bbttiRestartTrip.style = UIBarButtonItemStylePlain;
+    bbttiRestartTrip.enabled = NO;
     
-    carro = [[Carro alloc] initWithFrame:self.view.bounds];
-    carro.delegate = self;
-    [carro addObserver:self forKeyPath:@"condutor.tempoConducao" options:NSKeyValueObservingOptionNew context:NULL];
-    //[carro addObserver:self forKeyPath:@"deposito" options:(NSKeyValueObservingOptionNew) context:NULL];
-    [self.view insertSubview:carro atIndex:0];
+    car = [[Car alloc] initWithFrame:self.view.bounds];
+    car.delegate = self;
+    [car addObserver:self forKeyPath:@"driver.drivingTime" options:NSKeyValueObservingOptionNew context:NULL];
+    
+    [self.view insertSubview:car atIndex:0];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    if ([keyPath isEqualToString:@"condutor.tempoConducao"])
+    if ([keyPath isEqualToString:@"driver.drivingTime"])
     {
         
-        lblTempoDeViagem.text = [self deTempoIntParaTempoHHmmss:[change objectForKey:NSKeyValueChangeNewKey]];
+        lblTripTime.text = [self fromTimeIntToTimeHHmmss:[change objectForKey:NSKeyValueChangeNewKey]];
      
-        NSUInteger novoTempo = [[change objectForKey:NSKeyValueChangeNewKey] intValue];
+        NSUInteger newTime = [[change objectForKey:NSKeyValueChangeNewKey] intValue];
         
-        if (novoTempo != 0 && novoTempo % [[carro valueForKeyPath:@"condutor.tempoDescanco"] intValue] == 0)
+        if (newTime != 0 && newTime % [[car valueForKeyPath:@"driver.restingTime"] intValue] == 0)
         {
             UIColor *red = [UIColor redColor];
            
-            bttTempoVoa.enabled = YES;
+            bttGo.hidden = NO;
+            bttStop.hidden = YES;
             
             for (id eachView in [self.view subviews])
-                if (![eachView isKindOfClass:[UIButton class]])
+                //if (![eachView isKindOfClass:[UIButton class]])
                     [eachView setBackgroundColor:red];
         }
         else
@@ -46,63 +49,69 @@
         }
     }
 
-    // CarroDelegate Protocol substitutes the following code avoiding the use of GCD.
-    // ViewController does not have to "know" that for enabling a button onto itself it has to dispatch to main queue.
-    /*if ([keyPath isEqualToString:@"deposito"])
-    {
-        if ([[change objectForKey:NSKeyValueChangeNewKey] floatValue] == 0.0)
-        {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                bbttiRecomecar.enabled = YES;
-            });
-        }
-    }*/
 }
 
-- (NSString*)deTempoIntParaTempoHHmmss:(NSNumber*)tempo
+- (NSString*)fromTimeIntToTimeHHmmss:(NSNumber*)aTime
 {
-    NSDateComponents* tempoMinutos = [[NSDateComponents alloc] init];
+    NSDateComponents* timeMinutes = [[NSDateComponents alloc] init];
     
-    [tempoMinutos setMinute:[tempo intValue]];
+    [timeMinutes setMinute:[aTime intValue]];
     
-    NSCalendar* calendario = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSCalendar* calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     
-    NSDate* data = [calendario dateFromComponents:tempoMinutos];
+    NSDate* aDate = [calendar dateFromComponents:timeMinutes];
     
-    NSDateComponents* relogio = [calendario components:NSHourCalendarUnit |
+    NSDateComponents* clock = [calendar components:NSHourCalendarUnit |
                                  NSMinuteCalendarUnit |
                                  NSSecondCalendarUnit
-                                              fromDate:data];
+                                              fromDate:aDate];
     
-    return [NSString stringWithFormat:@"%02d:%02d:%02d",[relogio hour], [relogio minute], [relogio second]];
+    return [NSString stringWithFormat:@"%02d:%02d:%02d",[clock hour], [clock minute], [clock second]];
 }
 
-- (IBAction)tempoPassa:(id)sender
+- (IBAction)goingOnATrip:(id)sender
 {
-    bttTempoVoa.enabled = NO;
-    [carro atualizarTempoDeposito];
+    bttGo.hidden = YES;
+    bttStop.hidden = NO;
+    
+    [car updateTripTimeFuelTank];
 }
 
-- (IBAction)recomecarViagem:(id)sender
+- (IBAction)stopTrip:(id)sender
 {
-    bbttiRecomecar.enabled = NO;
-    bttTempoVoa.enabled = YES;
+    [car stopTrip];
     
-    [carro recomecarViagem];
-    
-    lblTempoDeViagem.text = [self deTempoIntParaTempoHHmmss:[carro valueForKeyPath:@"condutor.tempoConducao"]];
+    bttGo.hidden = NO;
+    bttStop.hidden = YES;
 }
 
-- (void)carroSemCombustivel
+
+
+- (IBAction)restartTrip:(id)sender
 {
-    bbttiRecomecar.enabled = YES;
+    bbttiRestartTrip.enabled = NO;
+
+    bttGo.hidden = NO;
+    bttGo.enabled = YES;
+    bttStop.hidden = YES;
     
+    [car restartTrip];
+    
+    lblTripTime.text = [self fromTimeIntToTimeHHmmss:[car valueForKeyPath:@"driver.drivingTime"]];
+}
+
+- (void)carRanOutOfFuel
+{
+    bbttiRestartTrip.enabled = YES;
+    
+    bttStop.hidden = YES;
+    bttGo.hidden = NO;
+    bttGo.enabled = NO;
 }
 
 - (void)dealloc
 {
-    [carro removeObserver:self forKeyPath:@"condutor.tempoConducao"];
-    // [carro removeObserver:self forKeyPath:@"deposito"];
+    [car removeObserver:self forKeyPath:@"driver.drivingTime"];
 }
 
 - (void)didReceiveMemoryWarning
