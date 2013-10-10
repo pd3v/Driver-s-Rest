@@ -1,19 +1,18 @@
 #import "Car.h"
 #import "Driver.h"
-#import "OWProgressView.h"
+#import "ARTProgressView.h"
 
 #define CONSUMPTION_PER_KM 0.06
 #define FUEL_TANK_CAPACITY_LITERS 60
 #define SPEED_KM_H 100 // Keeping it on a steady pace. Better move out of the way! :)
 #define FULL_FUEL_TANK_HUE 0.36
-#define RESTING_TIME_MIN 480
-#define TIME_HOLDER_SEC 0.000 // Not a Car property. Declare it as a macro/const.
+#define RESTING_TIME_MIN 1000
+#define TIME_HOLDER_SEC 0.01 // Not a Car property. Declare it as a macro/const.
 
 @implementation Car
 
 @synthesize driver, fuelTank, speed;
 @synthesize fuelConsumptionPerKm, tankCapacityLiters, speedKmH, fullFuelTankHue, restingTimeMin;
-@synthesize viewFuelTank;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -30,14 +29,14 @@
         driver.drivingTime = [NSNumber numberWithInt:0];
         driver.restingTime = [NSNumber numberWithInt:restingTimeMin];
         fuelTank = [NSNumber numberWithFloat:1.0];
-
-        viewFuelTank = [[OWProgressView alloc]initWithFrame:CGRectMake(20, 395, 280, 40)];
-        viewFuelTank.progressTintColor = [NSNumber numberWithFloat:fullFuelTankHue];
-        viewFuelTank.description = @"Fuel";
-        viewFuelTank.maxLabelValue = [NSNumber numberWithFloat:tankCapacityLiters];
+        
+        progviewFuelTank = [[ARTProgressView alloc]initWithFrame:CGRectMake(20, 395, 280, 40)];
+        progviewFuelTank.progressTintColor = [UIColor colorWithHue:fullFuelTankHue saturation:0.88 brightness:0.88 alpha:1.0];
+        progviewFuelTank.label = @"Fuel";
+        progviewFuelTank.maxLabelValue = [NSNumber numberWithFloat:tankCapacityLiters];
 
         self.userInteractionEnabled = NO;
-        [self addSubview:(UIView *)viewFuelTank];
+        [self addSubview:(UIView *)progviewFuelTank];
     }
     return self;
 }
@@ -51,11 +50,13 @@
 
     dispatch_sync(dispatch_get_main_queue(), ^{
         CGFloat hue;
-        UIColor *cor = [UIColor colorWithHue:[viewFuelTank.progressTintColor floatValue] saturation:0.88 brightness:0.88 alpha:1];
+        
+        UIColor *cor = progviewFuelTank.progressTintColor;
         [cor getHue:&hue saturation:nil brightness:nil alpha:nil];
 
         hue -= fullFuelTankHue / ( (tankCapacityLiters * 60) / (speedKmH * fuelConsumptionPerKm) );
-        viewFuelTank.progressTintColor = [NSNumber numberWithFloat:hue];
+        
+        progviewFuelTank.progressTintColor = [UIColor colorWithHue:hue saturation:0.88 brightness:0.88 alpha:1.0];
     });
     
 }
@@ -85,7 +86,7 @@
             
             dispatch_sync(dispatch_get_main_queue(), ^{
                 driver.drivingTime = [NSNumber numberWithInt:tripTime];
-                viewFuelTank.progressValue = fuelTank;
+                progviewFuelTank.progress = [fuelTank floatValue];
             });
            
             if (tripTime % [driver.restingTime intValue] == 0 && tripTime != 0)
@@ -107,11 +108,12 @@
     fuelTank = [NSNumber numberWithFloat:1.0];
     driver.drivingTime = [NSNumber numberWithInt:0];
     
-    viewFuelTank.progressValue = [NSNumber numberWithFloat:1.0];
-    viewFuelTank.maxLabelValue = [NSNumber numberWithFloat:tankCapacityLiters];
-    viewFuelTank.progressTintColor = [NSNumber numberWithFloat:fullFuelTankHue];
-    
-    [viewFuelTank reset];
+    progviewFuelTank.progress = 1.0;
+    progviewFuelTank.maxLabelValue = [NSNumber numberWithFloat:tankCapacityLiters];
+    progviewFuelTank.progressTintColor = [UIColor colorWithHue:fullFuelTankHue saturation:0.88 brightness:0.88 alpha:1.0];
+
+    [progviewFuelTank reset];
+
 }
 
 @end

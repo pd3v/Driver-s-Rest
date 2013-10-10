@@ -2,7 +2,7 @@
 #import <UIKit/UIKit.h>
 
 @class Driver;
-@class OWProgressView;
+@class ARTProgressView;
 
 @protocol CarDelegate
 - (void)carRanOutOfFuel;
@@ -10,7 +10,7 @@
 
 @interface Car : UIView {
     BOOL tripCancelled;
-    OWProgressView *viewFuelTank;
+    ARTProgressView *progviewFuelTank;
 }
 
 @property (nonatomic) Driver *driver;
@@ -22,8 +22,6 @@
 @property (nonatomic, readonly) NSUInteger speedKmH;
 @property (nonatomic, readonly) CGFloat fullFuelTankHue;
 @property (nonatomic, readonly) CGFloat restingTimeMin;
-
-@property (nonatomic) OWProgressView *viewFuelTank;
 
 @property (nonatomic, weak) id <CarDelegate> delegate;
 

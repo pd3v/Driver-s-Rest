@@ -85,8 +85,6 @@
     bttStop.hidden = YES;
 }
 
-
-
 - (IBAction)restartTrip:(id)sender
 {
     bbttiRestartTrip.enabled = NO;
