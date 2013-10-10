@@ -36,12 +36,10 @@
             bttStop.hidden = YES;
             
             for (id eachView in [self.view subviews])
-                //if (![eachView isKindOfClass:[UIButton class]])
-                    [eachView setBackgroundColor:red];
+                [eachView setBackgroundColor:red];
         }
         else
         {
-            
             UIColor *white = [UIColor whiteColor];
             
             for (id eachView in [self.view subviews])
@@ -74,7 +72,7 @@
     bttGo.hidden = YES;
     bttStop.hidden = NO;
     
-    [car updateTripTimeFuelTank];
+    [car goTrip];
 }
 
 - (IBAction)stopTrip:(id)sender

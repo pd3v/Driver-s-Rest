@@ -7,11 +7,11 @@
 #define SPEED_KM_H 100 // Keeping it on a steady pace. Better move out of the way! :)
 #define FULL_FUEL_TANK_HUE 0.36
 #define RESTING_TIME_MIN 1000
-#define TIME_HOLDER_SEC 0.01 // Not a Car property. Declare it as a macro/const.
+#define TIME_HOLDER_SEC 0.000 // Not a Car property. Declaring it as a macro/const.
 
 @implementation Car
 
-@synthesize driver, fuelTank, speed;
+@synthesize fuelTank;
 @synthesize fuelConsumptionPerKm, tankCapacityLiters, speedKmH, fullFuelTankHue, restingTimeMin;
 
 - (id)initWithFrame:(CGRect)frame
@@ -28,12 +28,12 @@
         
         driver.drivingTime = [NSNumber numberWithInt:0];
         driver.restingTime = [NSNumber numberWithInt:restingTimeMin];
-        fuelTank = [NSNumber numberWithFloat:1.0];
+        fuelTank = 1.0;
         
         progviewFuelTank = [[ARTProgressView alloc]initWithFrame:CGRectMake(20, 395, 280, 40)];
         progviewFuelTank.progressTintColor = [UIColor colorWithHue:fullFuelTankHue saturation:0.88 brightness:0.88 alpha:1.0];
         progviewFuelTank.label = @"Fuel";
-        progviewFuelTank.maxLabelValue = [NSNumber numberWithFloat:tankCapacityLiters];
+        progviewFuelTank.maxProgressLabelValue = [NSNumber numberWithFloat:tankCapacityLiters];
 
         self.userInteractionEnabled = NO;
         [self addSubview:(UIView *)progviewFuelTank];
@@ -41,33 +41,30 @@
     return self;
 }
 
-- (void)setFuelTank:(NSNumber *)aFuelTank
+- (void)setFuelTank:(CGFloat)aFuelTank
 {
     fuelTank = aFuelTank;
 
-    if ([aFuelTank floatValue] == 0)
+    if (aFuelTank == 0.0)
         dispatch_sync(dispatch_get_main_queue(), ^{ [self.delegate carRanOutOfFuel]; });
 
     dispatch_sync(dispatch_get_main_queue(), ^{
         CGFloat hue;
-        
         UIColor *cor = progviewFuelTank.progressTintColor;
         [cor getHue:&hue saturation:nil brightness:nil alpha:nil];
-
-        hue -= fullFuelTankHue / ( (tankCapacityLiters * 60) / (speedKmH * fuelConsumptionPerKm) );
+        hue -= fullFuelTankHue / ((tankCapacityLiters * 60) / (speedKmH * fuelConsumptionPerKm));
         
         progviewFuelTank.progressTintColor = [UIColor colorWithHue:hue saturation:0.88 brightness:0.88 alpha:1.0];
     });
-    
 }
 
-- (void)updateTripTimeFuelTank
+- (void)goTrip
 {
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         
         NSUInteger tripTime = [driver.drivingTime intValue];
-        CGFloat fuelTankLevel = [fuelTank floatValue];
+        CGFloat fuelTankLevel = fuelTank;
         
         CGFloat consumedFuel = 0;
         NSUInteger distanceTravelled = 0;
@@ -82,11 +79,11 @@
             
             tripTime += 1; // trip time in minutes
             
-            self.fuelTank = [NSNumber numberWithFloat:fuelTankLevel];
+            self.fuelTank = fuelTankLevel;
             
             dispatch_sync(dispatch_get_main_queue(), ^{
                 driver.drivingTime = [NSNumber numberWithInt:tripTime];
-                progviewFuelTank.progress = [fuelTank floatValue];
+                progviewFuelTank.progress = fuelTank;
             });
            
             if (tripTime % [driver.restingTime intValue] == 0 && tripTime != 0)
@@ -95,7 +92,6 @@
         
         tripCancelled = NO;
     });
-    
 }
 
 - (void)stopTrip
@@ -105,15 +101,14 @@
 
 - (void)restartTrip
 {
-    fuelTank = [NSNumber numberWithFloat:1.0];
+    fuelTank = 1.0;
     driver.drivingTime = [NSNumber numberWithInt:0];
     
     progviewFuelTank.progress = 1.0;
-    progviewFuelTank.maxLabelValue = [NSNumber numberWithFloat:tankCapacityLiters];
+    progviewFuelTank.maxProgressLabelValue = [NSNumber numberWithFloat:tankCapacityLiters];
     progviewFuelTank.progressTintColor = [UIColor colorWithHue:fullFuelTankHue saturation:0.88 brightness:0.88 alpha:1.0];
 
     [progviewFuelTank reset];
-
 }
 
 @end

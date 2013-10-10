@@ -6,5 +6,4 @@
 @property (nonatomic) NSNumber *drivingTime;
 @property (nonatomic) NSNumber *restingTime;
 
-
 @end

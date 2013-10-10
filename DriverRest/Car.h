@@ -9,13 +9,12 @@
 @end
 
 @interface Car : UIView {
+    Driver *driver;
     BOOL tripCancelled;
     ARTProgressView *progviewFuelTank;
 }
 
-@property (nonatomic) Driver *driver;
-@property (nonatomic) NSNumber *fuelTank;
-@property (nonatomic) NSNumber *speed;
+@property (nonatomic, readonly) CGFloat fuelTank;
 
 @property (nonatomic, readonly) CGFloat fuelConsumptionPerKm;
 @property (nonatomic, readonly) NSUInteger tankCapacityLiters;
@@ -25,7 +24,7 @@
 
 @property (nonatomic, weak) id <CarDelegate> delegate;
 
-- (void)updateTripTimeFuelTank;
+- (void)goTrip;
 - (void)stopTrip;
 - (void)restartTrip;
 

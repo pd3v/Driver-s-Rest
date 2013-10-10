@@ -3,7 +3,6 @@
 #import "Car.h"
 
 @interface ViewController : UIViewController <CarDelegate> {
-    
     Car *car;
     
     IBOutlet UILabel *lblTripTime;

@@ -4,12 +4,12 @@
 @interface ARTProgressView : UIProgressView
 {
     UILabel *lblLabel;
-    UILabel *lblProgressValue;
-    CGRect lblProgressValueInitFrame;
+    UILabel *lblProgressLabelValue;
+    CGRect lblProgressLabelValueInitFrame;
 }
 
 @property (nonatomic, copy) NSString *label;
-@property (nonatomic) NSNumber *maxLabelValue;
+@property (nonatomic) NSNumber *maxProgressLabelValue;
 
 -(void)reset;
 
