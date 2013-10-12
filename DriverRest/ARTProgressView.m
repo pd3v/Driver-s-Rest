@@ -10,10 +10,12 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.frame = frame;
-        self.progress = 1.0;
+        // self.progress = 1.0;
         
-        lblLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, self.frame.size.height-18, frame.size.width, 15)];
-        lblLabel.font = [UIFont fontWithName:@"Helvetica" size:13];
+        NSLog(@"self.frame.origin.y:%f", self.frame.origin.y);
+        lblLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, self.frame.size.height-40, frame.size.width, 15)];
+        NSLog(@"lblLabel:%@", NSStringFromCGRect([lblLabel textRectForBounds:lblLabel.bounds limitedToNumberOfLines:1]));
+        // lblLabel.font = [UIFont fontWithName:@"Helvetica" size:13];
         lblLabel.backgroundColor = [UIColor clearColor];
 
         lblProgressLabelValueInitFrame = CGRectMake(self.frame.size.width - 35, self.frame.size.height+2, 35, 15);
@@ -21,7 +23,7 @@
         lblProgressLabelValue.textAlignment = NSTextAlignmentLeft;
         [lblProgressLabelValue sizeToFit];
         lblProgressLabelValue.backgroundColor = [UIColor clearColor];
-        lblProgressLabelValue.font = [UIFont fontWithName:@"Helvetica-Bold" size:12];
+        // lblProgressLabelValue.font = [UIFont fontWithName:@"Helvetica-Bold" size:12];
         
         [self addSubview:(UIView *) lblLabel];
         [self addSubview:(UIView *) lblProgressLabelValue];
@@ -62,6 +64,13 @@
     
     return maxProgressLabelValue;
 }
+
+- (void)setLabelFontSize:(FontSize)aSize {
+    
+    lblLabel.font = [UIFont fontWithName:@"Helvetica" size:aSize];
+    [lblLabel sizeToFit];
+}
+
 
 
 -(void)reset

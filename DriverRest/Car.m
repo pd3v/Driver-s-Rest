@@ -33,7 +33,9 @@
         progviewFuelTank = [[ARTProgressView alloc]initWithFrame:CGRectMake(20, 395, 280, 40)];
         progviewFuelTank.progressTintColor = [UIColor colorWithHue:fullFuelTankHue saturation:0.88 brightness:0.88 alpha:1.0];
         progviewFuelTank.label = @"Fuel";
+        progviewFuelTank.labelFontSize = ARTLargeSizeFont;
         progviewFuelTank.maxProgressLabelValue = [NSNumber numberWithFloat:tankCapacityLiters];
+        progviewFuelTank.progress = 1.0;
 
         self.userInteractionEnabled = NO;
         [self addSubview:(UIView *)progviewFuelTank];
