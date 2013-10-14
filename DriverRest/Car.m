@@ -2,6 +2,12 @@
 #import "Driver.h"
 #import "ARTProgressView.h"
 
+typedef NS_ENUM(NSUInteger, TimeUnit)
+{
+    kTimeInMinutes = 60,
+    kTimeInSeconds = 1
+};
+
 #define CONSUMPTION_PER_KM 0.06
 #define FUEL_TANK_CAPACITY_LITERS 60
 #define SPEED_KM_H 100 // Keeping it on a steady pace. Better move out of the way! :)
@@ -30,10 +36,10 @@
         driver.restingTime = [NSNumber numberWithInt:restingTimeMin];
         fuelTank = 1.0;
         
-        progviewFuelTank = [[ARTProgressView alloc]initWithFrame:CGRectMake(20, 395, 280, 40)];
+        progviewFuelTank = [[ARTProgressView alloc]initWithFrame:CGRectMake(20, 395, 280, 50)];
         progviewFuelTank.progressTintColor = [UIColor colorWithHue:fullFuelTankHue saturation:0.88 brightness:0.88 alpha:1.0];
+        progviewFuelTank.labelFontSize = ARTMediumSizeFont;
         progviewFuelTank.label = @"Fuel";
-        progviewFuelTank.labelFontSize = ARTLargeSizeFont;
         progviewFuelTank.maxProgressLabelValue = [NSNumber numberWithFloat:tankCapacityLiters];
         progviewFuelTank.progress = 1.0;
 
@@ -54,7 +60,7 @@
         CGFloat hue;
         UIColor *cor = progviewFuelTank.progressTintColor;
         [cor getHue:&hue saturation:nil brightness:nil alpha:nil];
-        hue -= fullFuelTankHue / ((tankCapacityLiters * 60) / (speedKmH * fuelConsumptionPerKm));
+        hue -= fullFuelTankHue / ((tankCapacityLiters * kTimeInMinutes) / (speedKmH * fuelConsumptionPerKm));
         
         progviewFuelTank.progressTintColor = [UIColor colorWithHue:hue saturation:0.88 brightness:0.88 alpha:1.0];
     });
@@ -75,8 +81,8 @@
             
             [NSThread sleepForTimeInterval:TIME_HOLDER_SEC];
             
-            consumedFuel = tripTime * speedKmH * fuelConsumptionPerKm / 60;
-            distanceTravelled = tripTime * speedKmH / 60; // Variable not used. Just info.
+            consumedFuel = tripTime * speedKmH * fuelConsumptionPerKm / kTimeInMinutes;
+            distanceTravelled = tripTime * speedKmH / kTimeInMinutes; // Variable not used. Just info.
             fuelTankLevel = 1.0 - (consumedFuel / tankCapacityLiters);
             
             tripTime += 1; // trip time in minutes
