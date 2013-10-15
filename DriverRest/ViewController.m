@@ -7,7 +7,12 @@
 {
     [super viewDidLoad];
     
+    UIColor *borderColor = [UIColor colorWithHue:0.58 saturation:0.98 brightness:1.0 alpha:1.0];
+    bttGo.layer.borderColor = borderColor.CGColor;
+    bttGo.layer.borderWidth = 1.0;
     bttGo.hidden = NO;
+    bttStop.layer.borderColor = borderColor.CGColor;
+    bttStop.layer.borderWidth = 1.0;
     bttStop.hidden = YES;
     bbttiRestartTrip.style = UIBarButtonItemStylePlain;
     bbttiRestartTrip.enabled = NO;

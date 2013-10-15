@@ -17,7 +17,6 @@
 		3A0FAD5917FAE3A7003D0C3E /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3A0FAD4C17FAE3A7003D0C3E /* MainStoryboard.storyboard */; };
 		3A0FAD5A17FAE3A7003D0C3E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A0FAD4E17FAE3A7003D0C3E /* main.m */; };
 		3A0FAD5B17FAE3A7003D0C3E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A0FAD5017FAE3A7003D0C3E /* ViewController.m */; };
-		3A12A084180AC0A30018D7AA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A12A083180AC0A30018D7AA /* QuartzCore.framework */; };
 		3A1A207E18018B5B00CE2826 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A49224017CE42DA00B01B2B /* Foundation.framework */; };
 		3A1A207F18018E1C00CE2826 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A49223E17CE42DA00B01B2B /* UIKit.framework */; };
 		3A49224317CE42DA00B01B2B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A49224217CE42DA00B01B2B /* CoreGraphics.framework */; };
@@ -55,7 +54,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3A12A084180AC0A30018D7AA /* QuartzCore.framework in Frameworks */,
 				3A1A207F18018E1C00CE2826 /* UIKit.framework in Frameworks */,
 				3A1A207E18018B5B00CE2826 /* Foundation.framework in Frameworks */,
 				3A49224317CE42DA00B01B2B /* CoreGraphics.framework in Frameworks */,

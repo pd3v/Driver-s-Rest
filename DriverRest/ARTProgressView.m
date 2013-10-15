@@ -1,107 +1,59 @@
 
 #import "ARTProgressView.h"
-#import <QuartzCore/QuartzCore.h>
 
 @implementation ARTProgressView
 
-@synthesize maxProgressLabelValue, labelFontSize;
-
-bool fillingUpProgressView;
+@synthesize maxValue, valueSuffix, font;
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
         self.frame = frame;
-        // self.progress = 1.0;
         
-        // lblLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 0, 0)];
+        font = [[UIFont alloc]init];
+        
         lblLabel = [[UILabel alloc]init];
-        // lblLabel.font = [UIFont fontWithName:@"Helvetica" size:13];
         lblLabel.backgroundColor = [UIColor clearColor];
 
-        /*lblProgressLabelValueInitFrame = CGRectMake(self.frame.size.width - 35, self.frame.size.height+2, 35, 15);
-        lblProgressLabelValue = [[UILabel alloc]initWithFrame:lblProgressLabelValueInitFrame];*/
-        lblProgressLabelValue = [[UILabel alloc]init];
-        lblProgressLabelValue.textAlignment = NSTextAlignmentLeft;
-        //[lblProgressLabelValue sizeToFit];
-        lblProgressLabelValue.backgroundColor = [UIColor clearColor];
-        // lblProgressLabelValue.font = [UIFont fontWithName:@"Helvetica-Bold" size:12];
-        progressionType = ARTDescending;
+        lblProgressLabelValueInitFrame = CGRectMake(self.frame.size.width - 35, self.frame.size.height+2, 35, 15);
+        lblValue = [[UILabel alloc]initWithFrame:lblProgressLabelValueInitFrame];
+        lblValue.textAlignment = NSTextAlignmentLeft;
+        lblValue.backgroundColor = [UIColor clearColor];
+        lblValue.shadowColor = [UIColor colorWithWhite:0.0 alpha:0.2];
+        lblValue.shadowOffset = CGSizeMake(1.0, 1.0);
         
-
-        /*lblProgressLabelValue.layer.borderColor = [[UIColor blackColor]CGColor];
-        lblProgressLabelValue.layer.borderWidth = 1;
-        // lblProgressLabelValue.layer.cornerRadius = 5.0;*/
-
-        /*lblProgressLabelValue.layer.shadowColor = [[UIColor redColor]CGColor];
-        lblProgressLabelValue.layer.shadowOffset = CGSizeMake(0.0, 1.0);
-        lblProgressLabelValue.layer.shadowOpacity = 1.0;*/
-        
-        lblProgressLabelValue.shadowColor = [UIColor colorWithWhite:0.0 alpha:0.2];
-        lblProgressLabelValue.shadowOffset = CGSizeMake(1.0, 1.0);
-        
-        /*CGFloat borderWidth = 1.0;
-        [[lblProgressLabelValue layer] setBorderWidth:borderWidth];
-        
-        CALayer *mask = [CALayer layer];
-        // The mask needs to be filled to mask
-        [mask setBackgroundColor:[[UIColor blackColor] CGColor]];
-        // Make the masks frame smaller in height
-        CGRect maskFrame = CGRectInset([lblProgressLabelValue bounds], 0, borderWidth);
-        // Move the maskFrame to the top
-        maskFrame.origin.x = 2;
-        mask.frame = maskFrame;
-        lblProgressLabelValue.layer.mask = mask;*/
-
+        [self addObserver:self forKeyPath:@"font" options:NSKeyValueObservingOptionNew context:NULL];
+    
         [self addSubview:(UIView *) lblLabel];
-        [self addSubview:(UIView *) lblProgressLabelValue];
-
-        
+        [self addSubview:(UIView *) lblValue];
     }
     return self;
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if ([keyPath isEqualToString:@"font"])
+    {
+        lblLabel.font = [change objectForKey:NSKeyValueChangeNewKey];
+        lblValue.font = [change objectForKey:NSKeyValueChangeNewKey];
+    }
+    
 }
 
 - (void)setProgress:(CGFloat)value {
     
     [super progress];
     
-    //bool fillingUpProgressView;
-    //float static previousValue = 0;
-
-    //lblProgressLabelValueInitFrame = CGRectMake(self.frame.size.width - 35, self.frame.size.height+2, 35, 15);
-    //lblProgressLabelValueInitFrame = CGRectMake(0, self.frame.size.height+2, 35, 15);
-    //lblProgressLabelValueInitFrame = CGRectMake(0, 0, 0, 0);
-
+    CGRect lblProgressLabelValueFrame = lblValue.frame;
     
-    //fillingUpProgressView = value >= previousValue ? 1 : 0;
-    //previousValue = value;
+    if (lblValue.frame.origin.x >= value * self.frame.size.width)
+        lblProgressLabelValueFrame = CGRectMake(value * self.frame.size.width, lblValue.frame.origin.y, lblValue.frame.size.width , lblValue.frame.size.height);
     
-    //NSLog(@"Is ProgressView filling up?:%d", fillingUpProgressView);
+    lblValue.frame = lblProgressLabelValueFrame;
+    lblValue.text = [NSString stringWithFormat:@"%.1f%@", value  * [maxValue floatValue], valueSuffix];
     
-    progressionType = ARTAscending;
-    if (value == 1.0) progressionType = ARTDescending;
-
-    CGRect lblProgressLabelValueFrame = lblProgressLabelValue.frame;
-    
-    /*if (progressionType == ARTDescending)
-    {
-        if (lblProgressLabelValue.frame.origin.x >= value * self.frame.size.width)
-            lblProgressLabelValueFrame = CGRectMake(value * self.frame.size.width, lblProgressLabelValue.frame.origin.y, lblProgressLabelValue.frame.size.width , lblProgressLabelValue.frame.size.height);
-        NSLog(@"Descending");
-    }
-    else
-    {*/
-        if (lblProgressLabelValue.frame.origin.x <= value * self.frame.size.width)
-            lblProgressLabelValueFrame = CGRectMake(value * self.frame.size.width - lblProgressLabelValue.frame.size.width, lblProgressLabelValue.frame.origin.y, lblProgressLabelValue.frame.size.width , lblProgressLabelValue.frame.size.height);
-        NSLog(@"Ascending");
-    //}
-    
-    lblProgressLabelValue.frame = lblProgressLabelValueFrame;
-    lblProgressLabelValue.text = [NSString stringWithFormat:@"%.1f", self.progress  * [maxProgressLabelValue floatValue]];
-    
-    [lblProgressLabelValue sizeToFit];
-    
+    [lblValue sizeToFit];
     
     [self setProgress:value animated:TRUE];
 }
@@ -114,41 +66,34 @@ bool fillingUpProgressView;
     lblLabel.frame = CGRectMake(lblLabel.frame.origin.x, (lblLabel.frame.size.height+(lblLabel.frame.size.height*0.03))*(-1), lblLabel.frame.size.width, lblLabel.frame.size.height);
 }
 
-- (void)setMaxProgressLabelValue:(NSNumber *)aMaxProgressLabelValue {
+- (void)setMaxValue:(NSNumber *)aMaxValue {
     
-    maxProgressLabelValue = aMaxProgressLabelValue;
+    maxValue = aMaxValue;
     
-    lblProgressLabelValue.text = [NSString stringWithFormat:@"%.1f", [aMaxProgressLabelValue floatValue]];
-    
-    [lblProgressLabelValue sizeToFit];
+    lblValue.text = [NSString stringWithFormat:@"%.1f%@", [aMaxValue floatValue], valueSuffix];
+    lblValue.frame = lblProgressLabelValueInitFrame;
+    [lblValue sizeToFit];
 }
 
-- (NSNumber *)maxProgressLabelValue {
+- (NSNumber *)maxValue {
     
-    return maxProgressLabelValue;
+    return maxValue;
 }
 
-- (void)setLabelFontSize:(FontSize)aSize {
+- (void)setLabelsFontSize:(FontSize)aSize {
     
     lblLabel.font = [UIFont fontWithName:@"Helvetica" size:aSize];
     [lblLabel sizeToFit];
-    lblProgressLabelValue.font = [UIFont fontWithName:@"Helvetica" size:aSize];
-    [lblProgressLabelValue sizeToFit];
+    
+    lblValue.font = [UIFont fontWithName:@"Helvetica" size:aSize];
+    [lblValue sizeToFit];
 }
-
-/*- (void)setProgressionType:(ProgressionType)progressionType {
-    
-    _progressionType = progressionType;
-    
-    lblProgressLabelValueInitFrame = (progressionType == ARTAscending ? CGRectMake(0, 0, 35, 15): CGRectMake(self.frame.size.width - 35, self.frame.size.height+2, 35, 15));
-    
-}*/
 
 -(void)reset
 {
-    lblProgressLabelValue.text = [NSString stringWithFormat:@"%.1f", [maxProgressLabelValue floatValue]];
-    lblProgressLabelValue.frame = lblProgressLabelValueInitFrame;
-    [lblProgressLabelValue sizeToFit];
+    lblValue.text = [NSString stringWithFormat:@"%.1f%@", [maxValue floatValue], self.valueSuffix];
+    lblValue.frame = lblProgressLabelValueInitFrame;
+    [lblValue sizeToFit];
 }
 
 @end

@@ -7,24 +7,17 @@ typedef NS_ENUM(NSUInteger, FontSize) {
     ARTLargeSizeFont = 30
 };
 
-typedef NS_ENUM(NSUInteger, ProgressionType) {
-    ARTAscending,
-    ARTDescending
-};
-
-
 @interface ARTProgressView : UIProgressView
 {
     UILabel *lblLabel;
-    UILabel *lblProgressLabelValue;
+    UILabel *lblValue;
     CGRect lblProgressLabelValueInitFrame;
-    ProgressionType progressionType;
 }
 
 @property (nonatomic, copy) NSString *label;
-@property (nonatomic) NSNumber *maxProgressLabelValue;
-@property (nonatomic) FontSize labelFontSize;
-// @property (nonatomic) ProgressionType progressionType;
+@property (nonatomic, copy) NSString *valueSuffix;
+@property (nonatomic) NSNumber *maxValue;
+@property (nonatomic) UIFont *font;
 
 -(void)reset;
 

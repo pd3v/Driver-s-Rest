@@ -4,15 +4,15 @@
 
 typedef NS_ENUM(NSUInteger, TimeUnit)
 {
-    kTimeInMinutes = 60,
-    kTimeInSeconds = 1
+    kTimeInMinutes = 60
+    // kTimeInSeconds = 1
 };
 
 #define CONSUMPTION_PER_KM 0.06
 #define FUEL_TANK_CAPACITY_LITERS 60
 #define SPEED_KM_H 100 // Keeping it on a steady pace. Better move out of the way! :)
 #define FULL_FUEL_TANK_HUE 0.36
-#define RESTING_TIME_MIN 1000
+#define RESTING_TIME_MIN 240
 #define TIME_HOLDER_SEC 0.000 // Not a Car property. Declaring it as a macro/const.
 
 @implementation Car
@@ -38,10 +38,11 @@ typedef NS_ENUM(NSUInteger, TimeUnit)
         
         progviewFuelTank = [[ARTProgressView alloc]initWithFrame:CGRectMake(20, 395, 280, 50)];
         progviewFuelTank.progressTintColor = [UIColor colorWithHue:fullFuelTankHue saturation:0.88 brightness:0.88 alpha:1.0];
-        progviewFuelTank.labelFontSize = ARTMediumSizeFont;
+        progviewFuelTank.font = [UIFont fontWithName:@"Helvetica" size:ARTMediumSizeFont];
         progviewFuelTank.label = @"Fuel";
-        progviewFuelTank.maxProgressLabelValue = [NSNumber numberWithFloat:tankCapacityLiters];
+        progviewFuelTank.valueSuffix = @"L";
         progviewFuelTank.progress = 1.0;
+        progviewFuelTank.maxValue = [NSNumber numberWithFloat:tankCapacityLiters];
 
         self.userInteractionEnabled = NO;
         [self addSubview:(UIView *)progviewFuelTank];
@@ -52,7 +53,7 @@ typedef NS_ENUM(NSUInteger, TimeUnit)
 - (void)setFuelTank:(CGFloat)aFuelTank
 {
     fuelTank = aFuelTank;
-
+    
     if (aFuelTank == 0.0)
         dispatch_sync(dispatch_get_main_queue(), ^{ [self.delegate carRanOutOfFuel]; });
 
@@ -72,22 +73,25 @@ typedef NS_ENUM(NSUInteger, TimeUnit)
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         
         NSUInteger tripTime = [driver.drivingTime intValue];
-        CGFloat fuelTankLevel = fuelTank;
+        // CGFloat fuelTankLevel = fuelTank;
         
         CGFloat consumedFuel = 0;
         NSUInteger distanceTravelled = 0;
         
-        while (fuelTankLevel >= 0.0 && fuelTankLevel <= 1.0 && !tripCancelled) {
+        // while (fuelTankLevel > 0.0 && fuelTankLevel <= 1.0 && !tripCancelled) {
+        while (fuelTank > 0.0 && fuelTank <= 1.0 && !tripCancelled) {
             
             [NSThread sleepForTimeInterval:TIME_HOLDER_SEC];
             
             consumedFuel = tripTime * speedKmH * fuelConsumptionPerKm / kTimeInMinutes;
             distanceTravelled = tripTime * speedKmH / kTimeInMinutes; // Variable not used. Just info.
-            fuelTankLevel = 1.0 - (consumedFuel / tankCapacityLiters);
+            // fuelTankLevel = 1.0 - (consumedFuel / tankCapacityLiters);
+            fuelTank = 1.0 - (consumedFuel / tankCapacityLiters);
             
             tripTime += 1; // trip time in minutes
             
-            self.fuelTank = fuelTankLevel;
+            // self.fuelTank = fuelTankLevel;
+            self.fuelTank = fuelTank;
             
             dispatch_sync(dispatch_get_main_queue(), ^{
                 driver.drivingTime = [NSNumber numberWithInt:tripTime];
@@ -113,7 +117,7 @@ typedef NS_ENUM(NSUInteger, TimeUnit)
     driver.drivingTime = [NSNumber numberWithInt:0];
     
     progviewFuelTank.progress = 1.0;
-    progviewFuelTank.maxProgressLabelValue = [NSNumber numberWithFloat:tankCapacityLiters];
+    progviewFuelTank.maxValue = [NSNumber numberWithFloat:tankCapacityLiters];
     progviewFuelTank.progressTintColor = [UIColor colorWithHue:fullFuelTankHue saturation:0.88 brightness:0.88 alpha:1.0];
 
     [progviewFuelTank reset];
