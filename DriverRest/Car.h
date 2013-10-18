@@ -13,7 +13,8 @@
     Driver *driver;
     BOOL tripCancelled;
     ARTProgressView *progviewFuelTank;
-    Velocity *speedMoment;
+    // CGFloat consumedFuel;
+    Velocity *velocity;
 }
 
 @property (nonatomic, readonly) CGFloat fuelTank;

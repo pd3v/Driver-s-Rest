@@ -16,7 +16,7 @@
     return [[VelocityCurve alloc]init];
 }
 
--(NSNumber *)speed
+-(NSNumber *)acceleration:(NSNumber *)maxAcceleration
 {
     return nil;
 }

@@ -1,23 +1,23 @@
 
 #import "VelocityFunction.h"
-#include <stdlib.h>
+//#include <stdlib.h>
 
 @implementation VelocityCurve
 
--(NSNumber *)speed
+-(NSNumber *)acceleration:(NSNumber *)maxAcceleration
 {
-    NSNumber *speedSlice = [NSNumber numberWithInt:arc4random() % 20];
-    int acelarationDeacelration = arc4random() % 2;
+    NSNumber *acceleration = [NSNumber numberWithInt:arc4random() % [maxAcceleration intValue]];
+    NSUInteger accelerationDeceleration = arc4random() % 2;
     
-    int spd = [speedSlice intValue];
+    NSUInteger accDec = [acceleration intValue];
     
-    if (!acelarationDeacelration)
-        spd = spd * -1;
+    if (!accelerationDeceleration)
+        accDec = accDec * -1;
     
-    speedSlice = [NSNumber numberWithInt:spd];
+    acceleration = [NSNumber numberWithInt:accDec];
     
-    NSLog(@"acelarationDeacelration:%d speedSlice:%d", acelarationDeacelration, [speedSlice intValue]);
+    NSLog(@"acceleration=%d", [acceleration intValue]);
     
-    return speedSlice;
+    return acceleration;
 }
 @end

@@ -5,6 +5,6 @@
 
 +(Velocity *) create;
 
--(NSNumber *)speed;
+-(NSNumber *)acceleration:(NSNumber *)maxAcceleration;
 
 @end
