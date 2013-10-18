@@ -3,6 +3,7 @@
 
 @class Driver;
 @class ARTProgressView;
+@class Velocity;
 
 @protocol CarDelegate
 - (void)carRanOutOfFuel;
@@ -12,6 +13,7 @@
     Driver *driver;
     BOOL tripCancelled;
     ARTProgressView *progviewFuelTank;
+    Velocity *speedMoment;
 }
 
 @property (nonatomic, readonly) CGFloat fuelTank;
