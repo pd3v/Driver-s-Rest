@@ -17,7 +17,11 @@
     bbttiRestartTrip.style = UIBarButtonItemStylePlain;
     bbttiRestartTrip.enabled = NO;
     
+    lblDistanceTraveled.backgroundColor = [UIColor clearColor];
+    
     car = [[Car alloc] initWithFrame:self.view.bounds];
+    car.maxSpeed = 220; // Km/h
+    car.maxAcceleration = 1.38; // m/s2
     car.delegate = self;
     [car addObserver:self forKeyPath:@"driver.drivingTime" options:NSKeyValueObservingOptionNew context:NULL];
     
@@ -30,12 +34,13 @@
     {
         
         lblTripTime.text = [self fromTimeIntToTimeHHmmss:[change objectForKey:NSKeyValueChangeNewKey]];
-     
+        lblSpeed.text = [NSString stringWithFormat:@"%d", [[car valueForKey:@"speed"] intValue]]; // Km/h
+        lblDistanceTraveled.text = [NSString stringWithFormat:@"%.1f", [[car valueForKey:@"distanceTraveled"] floatValue]]; //Km
         NSUInteger newTime = [[change objectForKey:NSKeyValueChangeNewKey] intValue];
         
         if (newTime != 0 && newTime % [[car valueForKeyPath:@"driver.restingTime"] intValue] == 0)
         {
-            UIColor *red = [UIColor redColor];
+            UIColor *red = [UIColor colorWithRed:0.85 green:0.0 blue:0.0 alpha:1.0];
            
             bttGo.hidden = NO;
             bttStop.hidden = YES;

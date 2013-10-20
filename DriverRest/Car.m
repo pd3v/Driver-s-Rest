@@ -5,16 +5,16 @@
 
 #define CONSUMPTION_PER_100KM 6.0
 #define FUEL_TANK_CAPACITY_LITERS 60
-// #define SPEED_KM_H 100 // Keeping it on a steady pace. Better move out of the way! :)
 #define FULL_FUEL_TANK_HUE 0.36
-#define RESTING_TIME_MIN 1000
+#define RESTING_TIME_MIN 240
 #define TIME_HOLDER_SEC 0.02 // Not a Car property. Declaring it as a macro/const.
 #define SECONDS_TO_MINUTES 60
+#define MINUTES_TO_HOURS 60
 
 @implementation Car
 
-@synthesize fuelTank;
-@synthesize fuelConsumptionPerKm, tankCapacityLiters, speedKmH, fullFuelTankHue, restingTimeMin;
+@synthesize maxSpeed, maxAcceleration, distanceTraveled, fuelTank;
+@synthesize fuelConsumptionPerKm, tankCapacityLiters, speed, fullFuelTankHue, restingTimeMin;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -24,7 +24,6 @@
         
         fuelConsumptionPerKm = CONSUMPTION_PER_100KM/100;
         tankCapacityLiters = FUEL_TANK_CAPACITY_LITERS;
-        // speedKmH = SPEED_KM_H;
         fullFuelTankHue = FULL_FUEL_TANK_HUE;
         restingTimeMin = RESTING_TIME_MIN;
         
@@ -48,6 +47,16 @@
     return self;
 }
 
+- (void)setMaxSpeed:(CGFloat)aMaxSpeed
+{
+    maxSpeed = aMaxSpeed/60; //Distance covered in minutes;
+}
+
+- (void)setMaxAcceleration:(CGFloat)aMaxAcceleration
+{
+    maxAcceleration = aMaxAcceleration;
+}
+
 - (void)setFuelTank:(CGFloat)aFuelTank
 {
     fuelTank = aFuelTank;
@@ -59,7 +68,7 @@
         CGFloat hue;
         UIColor *cor = progviewFuelTank.progressTintColor;
         [cor getHue:&hue saturation:nil brightness:nil alpha:nil];
-        hue -= fullFuelTankHue / ((tankCapacityLiters * SECONDS_TO_MINUTES) / (speedKmH * fuelConsumptionPerKm));
+        hue -= fullFuelTankHue / ((tankCapacityLiters * SECONDS_TO_MINUTES) / (speed * fuelConsumptionPerKm));
         
         progviewFuelTank.progressTintColor = [UIColor colorWithHue:hue saturation:0.88 brightness:0.88 alpha:1.0];
     });
@@ -71,34 +80,37 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         
         NSUInteger tripTime = [driver.drivingTime intValue];
-        
         CGFloat consumedFuel = (1.0 - fuelTank) * tankCapacityLiters;
-        NSLog (@"Consumed Fuel=%f self.fuelTank=%f", consumedFuel, self.fuelTank);
-        NSUInteger distanceTravelled = 0;
-        
+
         CGFloat nowSpeed = 0, previousSpeed;
         
         while (fuelTank > 0.0 && fuelTank <= 1.0 && !tripCancelled) {
             
             [NSThread sleepForTimeInterval:TIME_HOLDER_SEC];
             
-            NSUInteger acceleration = [[velocity acceleration:[NSNumber numberWithInt:10]]intValue];
-            
-            // consumedFuel = tripTime * spd * fuelConsumptionPerKm / SECONDS_TO_MINUTES;
-            nowSpeed = previousSpeed + acceleration;
-            nowSpeed = nowSpeed < 0 ? 0 : nowSpeed;
-            previousSpeed = nowSpeed;
-            // NSLog (@"[self fuelConsumptionPerKm:nowSpeed]=%f", [self fuelConsumptionPerKm:nowSpeed]);
-            consumedFuel +=  nowSpeed * [self fuelConsumptionPerKm:nowSpeed] / SECONDS_TO_MINUTES;
-            //distanceTravelled = tripTime * nowSpeed / SECONDS_TO_MINUTES; // Variable not used. Just info.
-            distanceTravelled += tripTime * nowSpeed / SECONDS_TO_MINUTES; // Variable not used. Just info.
-            fuelTank = 1.0 - (consumedFuel / tankCapacityLiters);
-            fuelTank = fuelTank < 0.0 ? 0.0 : fuelTank;
-            NSLog (@"fuelTank=%f consumedFuel=%f nowSpeed=%f distanceTravelled=%d", fuelTank, consumedFuel, nowSpeed, distanceTravelled);
-            // fuelTank = (consumedFuelTotal / tankCapacityLiters);
+            // 1.38m/s2 <=> From 0Km/h to 100Km/h in 20s
+            CGFloat acceleration = [[velocity acceleration:[NSNumber numberWithFloat:maxAcceleration]]intValue];
+            //NSLog(@"acceleration=%fKm/min2", acceleration*60/1000);
 
-            tripTime += 1; // trip time in minutes
+            nowSpeed = previousSpeed + acceleration * SECONDS_TO_MINUTES / 1000; // Km/min
             
+            // Speed limits
+            if (nowSpeed < 0.0) nowSpeed = 0.0;
+            else if (nowSpeed >= maxSpeed) nowSpeed = maxSpeed;
+            
+            previousSpeed = nowSpeed;
+            
+            // NSLog (@"[self fuelConsumptionPerKm:nowSpeed]=%f", [self fuelConsumptionPerKm:nowSpeed]);
+            consumedFuel +=  nowSpeed * [self fuelConsumptionPerKm:nowSpeed] /*/ SECONDS_TO_MINUTES*/;
+            distanceTraveled = [NSNumber numberWithFloat:[distanceTraveled floatValue] + nowSpeed];
+            
+            fuelTank = 1.0 - (consumedFuel / tankCapacityLiters);
+            // Left fuel is all car should spend, no fuel reserve
+            if (fuelTank < 0.0) fuelTank = 0.0;
+            // NSLog (@"fuelTank=%fl consumedFuel=%fl leftFuel=%f nowSpeed=%.2fKm/h distanceTravelled=%f", fuelTank, consumedFuel, (consumedFuel / tankCapacityLiters), nowSpeed*60, [distanceTraveled floatValue]);
+
+            tripTime += 1; // minutes
+            speed = nowSpeed * MINUTES_TO_HOURS; // Km/h
             self.fuelTank = fuelTank;
             
             dispatch_sync(dispatch_get_main_queue(), ^{
@@ -113,7 +125,6 @@
         }
         
         tripCancelled = NO;
-        consumedFuel = 0.0;
     });
 }
 
@@ -125,6 +136,8 @@
 - (void)restartTrip
 {
     fuelTank = 1.0;
+    speed = 0;
+    distanceTraveled = [NSNumber numberWithFloat:0.0];
     driver.drivingTime = [NSNumber numberWithInt:0];
     
     progviewFuelTank.progress = 1.0;
@@ -136,10 +149,8 @@
 
 - (CGFloat)fuelConsumptionPerKm:(CGFloat)speed
 {
-    // Constant fuel consumption, independent from car speed - unreal
+    // Constant fuel consumption, independent from car acceleration - unreal
     CGFloat fuelConsumption = fuelConsumptionPerKm;
-    
-    // CGFloat fuelConsumption = (pow(2,speed/18)*1/25)/100;
     
     return fuelConsumption;
 }

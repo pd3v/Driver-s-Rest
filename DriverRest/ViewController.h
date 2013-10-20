@@ -6,6 +6,8 @@
     Car *car;
     
     IBOutlet UILabel *lblTripTime;
+    IBOutlet UILabel *lblSpeed;
+    IBOutlet UILabel *lblDistanceTraveled;
     IBOutlet UIButton *bttGo;
     IBOutlet UIButton *bttStop;
     IBOutlet UIBarButtonItem *bbttiRestartTrip;

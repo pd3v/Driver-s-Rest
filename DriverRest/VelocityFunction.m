@@ -6,17 +6,20 @@
 
 -(NSNumber *)acceleration:(NSNumber *)maxAcceleration
 {
-    NSNumber *acceleration = [NSNumber numberWithInt:arc4random() % [maxAcceleration intValue]];
+    maxAcceleration = [NSNumber numberWithFloat:[maxAcceleration floatValue] * 10];
+
+    NSNumber *acceleration = [NSNumber numberWithInt:arc4random() % [maxAcceleration intValue]*10];
     NSUInteger accelerationDeceleration = arc4random() % 2;
     
-    NSUInteger accDec = [acceleration intValue];
+    NSInteger accDec = [acceleration intValue];
     
+    // Accelerate or decelerate
     if (!accelerationDeceleration)
         accDec = accDec * -1;
     
-    acceleration = [NSNumber numberWithInt:accDec];
+    acceleration = [NSNumber numberWithInt:accDec/10];
     
-    NSLog(@"acceleration=%d", [acceleration intValue]);
+    // NSLog(@"acceleration=%d", [acceleration intValue]);
     
     return acceleration;
 }
