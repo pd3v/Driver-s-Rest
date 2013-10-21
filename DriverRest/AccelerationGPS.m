@@ -5,7 +5,7 @@
 
 -(NSNumber *)acceleration:(NSNumber *)maxAcceleration
 {
-    // Calculate acceleration through GPS coordenates
+    // Calculate acceleration through iDevice GPS coordenates
     
     return nil;
 }

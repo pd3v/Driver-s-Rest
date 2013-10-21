@@ -2,7 +2,6 @@
 #import "ViewController.h"
 
 #define CONSUMPTION_PER_100KM 6.0
-#define TIME_HOLDER_SEC 0.02 // Not a Car property. Declaring it as a macro/const.
 
 @implementation ViewController
 

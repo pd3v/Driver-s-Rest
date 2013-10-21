@@ -3,7 +3,7 @@
 #import "ARTProgressView.h"
 #import "AccelerationFactory.h"
 
-#define TIME_HOLDER_SEC 0.02 // Not a Car property. Declaring it as a macro/const.
+#define TIME_HOLDER_SEC 0.02 // Delay goTrip Loop for simulating purposes
 #define SECONDS_TO_MINUTES 60
 #define MINUTES_TO_HOURS 60
 
@@ -106,7 +106,7 @@
             distanceTraveledKm = [NSNumber numberWithFloat:[distanceTraveledKm floatValue] + nowSpeed];
             
             fuelTank = 1.0 - (consumedFuel / tankCapacityLiters);
-            // Left fuel is all car should spend, no fuel reserve
+            // Left fuel is all car should spend. There's no fuel reserve
             if (fuelTank < 0.0) fuelTank = 0.0;
     
             tripTime += 1; // minutes
@@ -148,6 +148,8 @@
 - (CGFloat)fuelConsumptionPerKm:(CGFloat)speed
 {
     // Constant fuel consumption, independent from car acceleration - unreal
+    // A formula which take into account gravity and friction should be considered.
+    // GPS reading is a more real alternative, even with accuracy issues
     CGFloat fuelConsumption = fuelConsumptionPerKm;
     
     return fuelConsumption;

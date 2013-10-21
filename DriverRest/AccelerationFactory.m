@@ -4,7 +4,7 @@
 
 @implementation AccelerationFactory
 
-+(AccelerationFactory *) create
++(AccelerationFactory *)create
 {
 /*#if defined(USE_VELOCITY_FUNCTION)
     return nil;
