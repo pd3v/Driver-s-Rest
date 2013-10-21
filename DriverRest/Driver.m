@@ -3,7 +3,7 @@
 
 @implementation Driver
 
-@synthesize drivingTime;
-@synthesize restingTime;
+@synthesize drivingTimeMin;
+@synthesize restingTimeMin;
 
 @end

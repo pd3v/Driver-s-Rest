@@ -1,8 +1,7 @@
 
-#import "VelocityFunction.h"
-//#include <stdlib.h>
+#import "AccelerationFunction.h"
 
-@implementation VelocityCurve
+@implementation AccelerationFunction
 
 -(NSNumber *)acceleration:(NSNumber *)maxAcceleration
 {
@@ -18,8 +17,6 @@
         accDec = accDec * -1;
     
     acceleration = [NSNumber numberWithInt:accDec/10];
-    
-    // NSLog(@"acceleration=%d", [acceleration intValue]);
     
     return acceleration;
 }

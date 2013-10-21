@@ -3,7 +3,7 @@
 
 @interface Driver : NSObject
 
-@property (nonatomic) NSNumber *drivingTime;
-@property (nonatomic) NSNumber *restingTime;
+@property (nonatomic) NSNumber *drivingTimeMin;
+@property (nonatomic) NSNumber *restingTimeMin;
 
 @end

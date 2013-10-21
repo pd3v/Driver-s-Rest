@@ -1,9 +1,9 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Velocity : NSObject
+@interface AccelerationFactory : NSObject
 
-+(Velocity *) create;
++(AccelerationFactory *) create;
 
 -(NSNumber *)acceleration:(NSNumber *)maxAcceleration;
 

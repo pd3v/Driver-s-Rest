@@ -3,7 +3,7 @@
 
 @class Driver;
 @class ARTProgressView;
-@class Velocity;
+@class AccelerationFactory;
 
 @protocol CarDelegate
 - (void)carRanOutOfFuel;
@@ -11,21 +11,22 @@
 
 @interface Car : UIView {
     Driver *driver;
-    BOOL tripCancelled;
     ARTProgressView *progviewFuelTank;
-    Velocity *velocity;
+    AccelerationFactory *carAcceleration;
+    
+    BOOL tripCancelled;
 }
 
-@property (nonatomic) CGFloat maxSpeed;
-@property (nonatomic) CGFloat maxAcceleration;
-@property (nonatomic, readonly) NSUInteger speed;
-@property (nonatomic, readonly) NSNumber *distanceTraveled;
-@property (nonatomic, readonly) CGFloat fuelTank;
+@property (nonatomic) CGFloat maxSpeedKmH;
+@property (nonatomic) CGFloat maxAccelerationMtrSec2;
+@property (nonatomic) CGFloat fuelConsumptionPerKm;
+@property (nonatomic) NSUInteger tankCapacityLiters;
+@property (nonatomic) CGFloat fullFuelTankHue;
+@property (nonatomic) NSUInteger driversRestingTimeMin;
 
-@property (nonatomic, readonly) CGFloat fuelConsumptionPerKm;
-@property (nonatomic, readonly) NSUInteger tankCapacityLiters;
-@property (nonatomic, readonly) CGFloat fullFuelTankHue;
-@property (nonatomic, readonly) CGFloat restingTimeMin;
+@property (nonatomic, readonly) NSUInteger speedKmH;
+@property (nonatomic, readonly) NSNumber *distanceTraveledKm;
+@property (nonatomic, readonly) CGFloat fuelTank;
 
 @property (nonatomic, weak) id <CarDelegate> delegate;
 

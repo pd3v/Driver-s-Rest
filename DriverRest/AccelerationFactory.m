@@ -1,10 +1,10 @@
 
-#import "Velocity.h"
-#import "VelocityFunction.h"
+#import "AccelerationFactory.h"
+#import "AccelerationFunction.h"
 
-@implementation Velocity
+@implementation AccelerationFactory
 
-+(Velocity *) create
++(AccelerationFactory *) create
 {
 /*#if defined(USE_VELOCITY_FUNCTION)
     return nil;
@@ -13,7 +13,7 @@
 #else
     return nil;
 #endif*/
-    return [[VelocityCurve alloc]init];
+    return [[AccelerationFunction alloc]init];
 }
 
 -(NSNumber *)acceleration:(NSNumber *)maxAcceleration

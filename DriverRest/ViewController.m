@@ -1,6 +1,9 @@
 
 #import "ViewController.h"
 
+#define CONSUMPTION_PER_100KM 6.0
+#define TIME_HOLDER_SEC 0.02 // Not a Car property. Declaring it as a macro/const.
+
 @implementation ViewController
 
 - (void)viewDidLoad
@@ -17,28 +20,31 @@
     bbttiRestartTrip.style = UIBarButtonItemStylePlain;
     bbttiRestartTrip.enabled = NO;
     
-    lblDistanceTraveled.backgroundColor = [UIColor clearColor];
-    
     car = [[Car alloc] initWithFrame:self.view.bounds];
-    car.maxSpeed = 220; // Km/h
-    car.maxAcceleration = 1.38; // m/s2
+    car.maxSpeedKmH = 220;
+    car.maxAccelerationMtrSec2 = 1.38; // 1.38m/s2 => From 0Km/h to 100Km/h in 20s
+    car.fuelConsumptionPerKm = CONSUMPTION_PER_100KM/100;
+    car.tankCapacityLiters = 60;
+    car.fullFuelTankHue = 0.36;
+    car.driversRestingTimeMin = 480;
     car.delegate = self;
-    [car addObserver:self forKeyPath:@"driver.drivingTime" options:NSKeyValueObservingOptionNew context:NULL];
+    
+    [car addObserver:self forKeyPath:@"driver.drivingTimeMin" options:NSKeyValueObservingOptionNew context:NULL];
     
     [self.view insertSubview:car atIndex:0];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    if ([keyPath isEqualToString:@"driver.drivingTime"])
+    if ([keyPath isEqualToString:@"driver.drivingTimeMin"])
     {
         
         lblTripTime.text = [self fromTimeIntToTimeHHmmss:[change objectForKey:NSKeyValueChangeNewKey]];
-        lblSpeed.text = [NSString stringWithFormat:@"%d", [[car valueForKey:@"speed"] intValue]]; // Km/h
-        lblDistanceTraveled.text = [NSString stringWithFormat:@"%.1f", [[car valueForKey:@"distanceTraveled"] floatValue]]; //Km
+        lblSpeed.text = [NSString stringWithFormat:@"%d", [[car valueForKey:@"speedKmH"] intValue]]; // Km/h
+        lblDistanceTraveled.text = [NSString stringWithFormat:@"%.1f", [[car valueForKey:@"distanceTraveledKm"] floatValue]]; //Km
         NSUInteger newTime = [[change objectForKey:NSKeyValueChangeNewKey] intValue];
         
-        if (newTime != 0 && newTime % [[car valueForKeyPath:@"driver.restingTime"] intValue] == 0)
+        if (newTime != 0 && newTime % [[car valueForKeyPath:@"driver.restingTimeMin"] intValue] == 0)
         {
             UIColor *red = [UIColor colorWithRed:0.85 green:0.0 blue:0.0 alpha:1.0];
            
@@ -103,7 +109,7 @@
     
     [car restartTrip];
     
-    lblTripTime.text = [self fromTimeIntToTimeHHmmss:[car valueForKeyPath:@"driver.drivingTime"]];
+    lblTripTime.text = [self fromTimeIntToTimeHHmmss:[car valueForKeyPath:@"driver.drivingTimeMin"]];
 }
 
 - (void)carRanOutOfFuel
@@ -117,7 +123,7 @@
 
 - (void)dealloc
 {
-    [car removeObserver:self forKeyPath:@"driver.drivingTime"];
+    [car removeObserver:self forKeyPath:@"driver.drivingTimeMin"];
 }
 
 - (void)didReceiveMemoryWarning
