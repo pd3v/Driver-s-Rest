@@ -25,7 +25,7 @@
     car.fuelConsumptionPerKm = CONSUMPTION_PER_100KM/100;
     car.tankCapacityLiters = 60;
     car.fullFuelTankHue = 0.36;
-    car.driversRestingTimeMin = 480;
+    car.driversRestingTimeMin = 120;
     car.delegate = self;
     
     [car addObserver:self forKeyPath:@"driver.drivingTimeMin" options:NSKeyValueObservingOptionNew context:NULL];

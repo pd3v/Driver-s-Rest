@@ -19,9 +19,9 @@
 		3A0FAD5B17FAE3A7003D0C3E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A0FAD5017FAE3A7003D0C3E /* ViewController.m */; };
 		3A1A207E18018B5B00CE2826 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A49224017CE42DA00B01B2B /* Foundation.framework */; };
 		3A1A207F18018E1C00CE2826 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A49223E17CE42DA00B01B2B /* UIKit.framework */; };
-		3A1CF270180DEE5800CAF140 /* AccelerationFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1CF26F180DEE5800CAF140 /* AccelerationFactory.m */; };
+		3A1CF270180DEE5800CAF140 /* Acceleration.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1CF26F180DEE5800CAF140 /* Acceleration.m */; };
 		3A49224317CE42DA00B01B2B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A49224217CE42DA00B01B2B /* CoreGraphics.framework */; };
-		3A9DB79B180594B40035BD9B /* ARTProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9DB79A180594B40035BD9B /* ARTProgressView.m */; };
+		3A534810181FE34F00780051 /* ARTProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A53480F181FE34F00780051 /* ARTProgressView.m */; };
 		3AC9C4DA18153CEF009D0CFA /* AccelerationGPS.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AC9C4D918153CEF009D0CFA /* AccelerationGPS.m */; };
 		3ADFC319180E9924006D4EA4 /* AccelerationFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ADFC318180E9924006D4EA4 /* AccelerationFunction.m */; };
 /* End PBXBuildFile section */
@@ -44,14 +44,14 @@
 		3A0FAD4F17FAE3A7003D0C3E /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		3A0FAD5017FAE3A7003D0C3E /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A12A083180AC0A30018D7AA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		3A1CF26E180DEE5800CAF140 /* AccelerationFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = AccelerationFactory.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		3A1CF26F180DEE5800CAF140 /* AccelerationFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AccelerationFactory.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		3A1CF26E180DEE5800CAF140 /* Acceleration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Acceleration.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		3A1CF26F180DEE5800CAF140 /* Acceleration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = Acceleration.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3A49223B17CE42DA00B01B2B /* DriverRest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DriverRest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A49223E17CE42DA00B01B2B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		3A49224017CE42DA00B01B2B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		3A49224217CE42DA00B01B2B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		3A9DB799180594B40035BD9B /* ARTProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = ARTProgressView.h; sourceTree = "<group>"; };
-		3A9DB79A180594B40035BD9B /* ARTProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ARTProgressView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		3A53480E181FE34F00780051 /* ARTProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ARTProgressView.h; path = ../../toolkit/ARTProgressView.h; sourceTree = "<group>"; };
+		3A53480F181FE34F00780051 /* ARTProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ARTProgressView.m; path = ../../toolkit/ARTProgressView.m; sourceTree = "<group>"; };
 		3AC9C4D818153CEF009D0CFA /* AccelerationGPS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = AccelerationGPS.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3AC9C4D918153CEF009D0CFA /* AccelerationGPS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AccelerationGPS.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3ADFC317180E9924006D4EA4 /* AccelerationFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = AccelerationFunction.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -75,8 +75,8 @@
 		3A0FAD3E17FAE3A7003D0C3E /* DriverRest */ = {
 			isa = PBXGroup;
 			children = (
-				3A1CF26E180DEE5800CAF140 /* AccelerationFactory.h */,
-				3A1CF26F180DEE5800CAF140 /* AccelerationFactory.m */,
+				3A1CF26E180DEE5800CAF140 /* Acceleration.h */,
+				3A1CF26F180DEE5800CAF140 /* Acceleration.m */,
 				3ADFC317180E9924006D4EA4 /* AccelerationFunction.h */,
 				3ADFC318180E9924006D4EA4 /* AccelerationFunction.m */,
 				3AC9C4D818153CEF009D0CFA /* AccelerationGPS.h */,
@@ -85,8 +85,8 @@
 				3A0FAD4417FAE3A7003D0C3E /* Driver.m */,
 				3A0FAD4117FAE3A7003D0C3E /* Car.h */,
 				3A0FAD4217FAE3A7003D0C3E /* Car.m */,
-				3A9DB799180594B40035BD9B /* ARTProgressView.h */,
-				3A9DB79A180594B40035BD9B /* ARTProgressView.m */,
+				3A53480E181FE34F00780051 /* ARTProgressView.h */,
+				3A53480F181FE34F00780051 /* ARTProgressView.m */,
 				3A0FAD3F17FAE3A7003D0C3E /* AppDelegate.h */,
 				3A0FAD4017FAE3A7003D0C3E /* AppDelegate.m */,
 				3A0FAD4C17FAE3A7003D0C3E /* MainStoryboard.storyboard */,
@@ -206,14 +206,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A0FAD5117FAE3A7003D0C3E /* AppDelegate.m in Sources */,
+				3A534810181FE34F00780051 /* ARTProgressView.m in Sources */,
 				3AC9C4DA18153CEF009D0CFA /* AccelerationGPS.m in Sources */,
 				3A0FAD5217FAE3A7003D0C3E /* Car.m in Sources */,
-				3A1CF270180DEE5800CAF140 /* AccelerationFactory.m in Sources */,
+				3A1CF270180DEE5800CAF140 /* Acceleration.m in Sources */,
 				3A0FAD5317FAE3A7003D0C3E /* Driver.m in Sources */,
 				3A0FAD5A17FAE3A7003D0C3E /* main.m in Sources */,
 				3A0FAD5B17FAE3A7003D0C3E /* ViewController.m in Sources */,
 				3ADFC319180E9924006D4EA4 /* AccelerationFunction.m in Sources */,
-				3A9DB79B180594B40035BD9B /* ARTProgressView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,10 +1,12 @@
 
 #import "AccelerationFunction.h"
 
-@implementation AccelerationFunction
+@implementation AccelerationFunction : Acceleration
 
 -(NSNumber *)acceleration:(NSNumber *)maxAcceleration
 {
+    // A simple simulation of a driver behavior
+    
     maxAcceleration = [NSNumber numberWithFloat:[maxAcceleration floatValue] * 10];
 
     NSNumber *acceleration = [NSNumber numberWithInt:arc4random() % [maxAcceleration intValue]*10];

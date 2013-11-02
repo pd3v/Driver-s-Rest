@@ -1,7 +1,7 @@
 
 #import <Foundation/Foundation.h>
-#import "AccelerationFactory.h"
+#import "Acceleration.h"
 
-@interface AccelerationFunction : AccelerationFactory
+@interface AccelerationFunction : Acceleration
 
 @end

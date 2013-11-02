@@ -1,11 +1,17 @@
 #import "Car.h"
 #import "Driver.h"
 #import "ARTProgressView.h"
-#import "AccelerationFactory.h"
+#import "Acceleration.h"
 
-#define TIME_HOLDER_SEC 0.02 // Delay goTrip Loop for simulating purposes
+#define TIME_HOLDER_SEC 0.02 // Delay goTrip method Loop for simulating purposes
 #define SECONDS_TO_MINUTES 60
 #define MINUTES_TO_HOURS 60
+
+@interface Car ()
+
+@property (nonatomic, readonly) CGFloat fuelTank;
+
+@end
 
 @implementation Car
 
@@ -18,15 +24,18 @@
     if (self) {
         driver = [[Driver alloc]init];
     
-        carAcceleration = [AccelerationFactory create];
+        carAcceleration = [Acceleration initWith:AccelerationTypeFunction];
+        // but acceleration could be obtain through GPS like the following
+        // carAcceleration = [Acceleration initWith:AccelerationTypeGPS];
         
         fuelTank = 1.0;
         
         progviewFuelTank = [[ARTProgressView alloc]initWithFrame:CGRectMake(20, 395, 280, 50)];
         progviewFuelTank.font = [UIFont fontWithName:@"Helvetica" size:ARTMediumSizeFont];
-        progviewFuelTank.label = @"Fuel";
-        progviewFuelTank.valueSuffix = @"L";
+        progviewFuelTank.title = @"Fuel";
+        progviewFuelTank.valueTag = @"L";
         progviewFuelTank.progress = 1.0;
+        progviewFuelTank.maxValue = [NSNumber numberWithFloat:100];
 
         self.userInteractionEnabled = NO;
         [self addSubview:(UIView *)progviewFuelTank];
@@ -106,7 +115,7 @@
             distanceTraveledKm = [NSNumber numberWithFloat:[distanceTraveledKm floatValue] + nowSpeed];
             
             fuelTank = 1.0 - (consumedFuel / tankCapacityLiters);
-            // Left fuel is all car should spend. There's no fuel reserve
+            // Left fuel is all car has to spend. There's no fuel reserve
             if (fuelTank < 0.0) fuelTank = 0.0;
     
             tripTime += 1; // minutes
@@ -115,7 +124,7 @@
             
             dispatch_sync(dispatch_get_main_queue(), ^{
                 driver.drivingTimeMin = [NSNumber numberWithInt:tripTime];
-                progviewFuelTank.progress = fuelTank;
+                [progviewFuelTank setProgress:fuelTank animated:YES];
             });
             
             if ((tripTime % [driver.restingTimeMin intValue] == 0 && tripTime != 0))

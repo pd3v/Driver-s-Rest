@@ -3,7 +3,7 @@
 
 @class Driver;
 @class ARTProgressView;
-@class AccelerationFactory;
+@class Acceleration;
 
 @protocol CarDelegate
 - (void)carRanOutOfFuel;
@@ -12,7 +12,7 @@
 @interface Car : UIView {
     Driver *driver;
     ARTProgressView *progviewFuelTank;
-    AccelerationFactory *carAcceleration;
+    Acceleration *carAcceleration;
     
     BOOL tripCancelled;
 }
@@ -26,7 +26,6 @@
 
 @property (nonatomic, readonly) NSUInteger speedKmH;
 @property (nonatomic, readonly) NSNumber *distanceTraveledKm;
-@property (nonatomic, readonly) CGFloat fuelTank;
 
 @property (nonatomic, weak) id <CarDelegate> delegate;
 
