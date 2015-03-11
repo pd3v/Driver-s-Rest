@@ -79,7 +79,7 @@
                                  NSSecondCalendarUnit
                                               fromDate:aDate];
     
-    return [NSString stringWithFormat:@"%02d:%02d:%02d",[clock hour], [clock minute], [clock second]];
+    return [NSString stringWithFormat:@"%02li:%02li:%02li",[clock hour], [clock minute], [clock second]];
 }
 
 - (IBAction)goingOnATrip:(id)sender

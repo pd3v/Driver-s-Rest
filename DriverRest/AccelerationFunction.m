@@ -18,7 +18,7 @@
     if (!accelerationDeceleration)
         accDec = accDec * -1;
     
-    acceleration = [NSNumber numberWithInt:accDec/10];
+    acceleration = [NSNumber numberWithInt:accDec/10.0];
     
     return acceleration;
 }

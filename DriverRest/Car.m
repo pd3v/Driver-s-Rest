@@ -8,9 +8,7 @@
 #define MINUTES_TO_HOURS 60
 
 @interface Car ()
-
 @property (nonatomic, readonly) CGFloat fuelTank;
-
 @end
 
 @implementation Car
@@ -30,7 +28,7 @@
         
         fuelTank = 1.0;
         
-        progviewFuelTank = [[ARTProgressView alloc]initWithFrame:CGRectMake(20, 395, 280, 50)];
+        progviewFuelTank = [[ARTProgressView alloc]initWithFrame:CGRectMake(20, 440, 280, 50)];
         progviewFuelTank.font = [UIFont fontWithName:@"Helvetica" size:ARTMediumSizeFont];
         progviewFuelTank.title = @"Fuel";
         progviewFuelTank.valueTag = @"L";
@@ -68,7 +66,7 @@
 - (void)setDriversRestingTimeMin:(NSUInteger)aDriversRestingTimeMin
 {
     driversRestingTimeMin = aDriversRestingTimeMin;
-    driver.restingTimeMin = [NSNumber numberWithInt:aDriversRestingTimeMin];
+    driver.restingTimeMin = [NSNumber numberWithUnsignedLong:aDriversRestingTimeMin];
 }
 
 - (void)setFuelTank:(CGFloat)aFuelTank
@@ -123,7 +121,7 @@
             self.fuelTank = fuelTank;
             
             dispatch_sync(dispatch_get_main_queue(), ^{
-                driver.drivingTimeMin = [NSNumber numberWithInt:tripTime];
+                driver.drivingTimeMin = [NSNumber numberWithUnsignedLong:tripTime];
                 [progviewFuelTank setProgress:fuelTank animated:YES];
             });
             
